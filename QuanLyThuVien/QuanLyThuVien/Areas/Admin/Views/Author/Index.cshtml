@@ -1,0 +1,37 @@
+﻿@model DataProvider.Model.Author
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section namepage{
+    Danh sách tác giả
+    }
+
+<div>
+    <h4>List Author</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAuthor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAuthor)
+        </dd>
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AuthorID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

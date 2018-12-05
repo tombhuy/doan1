@@ -1,0 +1,47 @@
+﻿@model DataProvider.Model.About
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section linkpage{
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="#">About</a></li>
+    <li class="active"><a href="#">Edit</a></li>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>About</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name,new { @class = "form-control-label" })    
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control",@type="text",@id= "exampleInputName2" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                @Html.LabelFor(model => model.Description,new { @class = "control-label mb-1" })     
+                @Html.TextAreaFor(model => model.Description, new {@class = "form-control", @name = "textarea-input", @id = "textarea-input", @rows = "20" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="button" class="btn btn-outline-link " onclick="location.href='@Url.Action("Index","About")'"><i class="fa fa-mail-reply"></i> Trở về</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    
+</div>
