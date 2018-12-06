@@ -36,8 +36,6 @@ function loadData(id,searchString) {
             //paging += '<li class="paginate_button "><a onclick="return loadData(2)" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>';
             //paging += '<li class="paginate_button next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
 
-            //var paging='<li>Phân trang ở đây<>'
-
             var paging = '';
             if (result.pageNumber==1)
             {
