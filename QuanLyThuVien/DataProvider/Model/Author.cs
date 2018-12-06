@@ -14,9 +14,18 @@ namespace DataProvider.Model
     
     public partial class Author
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Author()
+        {
+            this.Books = new HashSet<Book>();
+        }
+    
         public int AuthorID { get; set; }
         public string AuthorName { get; set; }
         public string DescriptionAuthor { get; set; }
         public string Alias { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Book> Books { get; set; }
     }
 }

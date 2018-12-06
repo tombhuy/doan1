@@ -26,14 +26,14 @@ namespace DataProvider.Model
         }
     
         public virtual DbSet<About> Abouts { get; set; }
-        public virtual DbSet<BookCategory> BookCategories { get; set; }
-        public virtual DbSet<ChapterDetail> ChapterDetails { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
         public virtual DbSet<TypeUser> TypeUsers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<BookCategory> BookCategories { get; set; }
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<ChapterDetail> ChapterDetails { get; set; }
     }
 }

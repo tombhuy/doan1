@@ -3,10 +3,10 @@ $(document).ready(function () {
     loadData(1, "");
 });
 
-//Load Data
+//Load Data function
 function loadData(id, searchString) {
     $.ajax({
-        url: "/Admin/Quotation/List",
+        url: "/Admin/BookCategory/List",
         type: "GET",
         contentType: "application/json;charset=utf-8",
         data: { "page": id, "searchKey": searchString },
@@ -15,9 +15,16 @@ function loadData(id, searchString) {
             var html = '';
             $.each(result.data, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.QuotationID + '</td>';
-                html += '<td>' + item.NameQuotation + '</td>';
-                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.QuotationID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.QuotationID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '<td>' + item.CategoryID + '</td>';
+                html += '<td>' + item.CategoryName + '</td>';
+                html += '<td>' + item.SeoTitle + '</td>';
+                html += '<td>' + item.MetaKeywords + '</td>';
+                html += '<td>' + item.MetaDescription + '</td>';
+                html += '<td>' + item.Status + '</td>';
+                html += '<td>' + item.CreatedDate + '</td>';
+                html += '<td>' + item.CreatedBy + '</td>';
+                html += '<td>' + item.ShowOnHome + '</td>';
+                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.CategoryID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.CategoryID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
@@ -55,19 +62,26 @@ function loadData(id, searchString) {
     });
 }
 
-//Add Data 
+//Add Data Function 
 function Add() {
     var res = validate();
     if (res == false) {
         return false;
     }
-    var quoObj = {
-        QuotationID: $('#QuotationID').val(),
-        NameQuotation: $('#NameQuotation').val(),
+    var categoryObj = {
+        CategoryID: $('#CategoryID').val(),
+        CategoryName: $('#CategoryName').val(),
+        SeoTitle: $('#SeoTitle').val(),
+        MetaKeywords: $('#MetaKeywords').val(),
+        MetaDescription: $('#MetaDescription').val(),
+        Status: $('#Status').val(),
+        CreatedDate: $('#CreatedDate').val(),
+        CreatedBy: $('#CreatedBy').val(),
+        ShowOnHome: $('#ShowOnHome').val(),
     };
     $.ajax({
-        url: "/Admin/Quotation/Add",
-        data: JSON.stringify(quoObj),
+        url: "/Admin/BookCategory/Add",
+        data: JSON.stringify(categoryObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -85,18 +99,32 @@ function Add() {
     });
 }
 
-//Get By ID
-function getbyID(QuoID) {
-    $('#QuotationID').css('border-color', 'lightgrey');
-    $('#NameQuotation').css('border-color', 'lightgrey');
+//Function for getting the Data Based upon Employee ID
+function getbyID(CategoryID) {
+    $('#CategoryName').css('border-color', 'lightgrey');
+    $('#SeoTitle').css('border-color', 'lightgrey');
+    $('#MetaKeywords').css('border-color', 'lightgrey');
+    $('#MetaDescription').css('border-color', 'lightgrey');
+    $('#Status').css('border-color', 'lightgrey');
+    $('#CreatedDate').css('border-color', 'lightgrey');
+    $('#CreatedBy').css('border-color', 'lightgrey');
+    $('#ShowOnHome').css('border-color', 'lightgrey');
     $.ajax({
-        url: "/Admin/Quotation/GetbyID/" + QuoID,
+        url: "/Admin/BookCategory/GetbyID/" + CategoryID,
         typr: "GET",
         contentType: "application/json;charset=UTF-8",
         dataType: "json",
         success: function (result) {
-            $('#QuotationID').val(result.QuotationID);
-            $('#NameQuotation').val(result.NameQuotation);
+            $('#CategoryID').val(result.CategoryID);
+            $('#CategoryName').val(result.CategoryName);
+            $('#SeoTitle').val(result.SeoTitle);
+            $('#MetaKeywords').val(result.MetaKeywords);
+            $('#MetaDescription').val(result.MetaDescription);
+            $('#Status').val(result.Status);
+            $('#CreatedDate').val(result.CreatedDate);
+            $('#CreatedBy').val(result.CreatedBy);
+            $('#ShowOnHome').val(result.ShowOnHome);
+
             $('#myModal').modal('show');
             $('#btnUpdate').show();
             $('#btnAdd').hide();
@@ -108,29 +136,42 @@ function getbyID(QuoID) {
     return false;
 }
 
-//Update
+//function for updating employee's record
 function Update() {
     var res = validate();
     if (res == false) {
         return false;
     }
 
-    var quoObj = {
-        QuotationID: $('#QuotationID').val(),
-        NameQuotation: $('#NameQuotation').val(),
+    var categoryObj = {
+        CategoryID: $('#CategoryID').val(),
+        CategoryName: $('#CategoryName').val(),
+        SeoTitle: $('#SeoTitle').val(),
+        MetaKeywords: $('#MetaKeywords').val(),
+        MetaDescription: $('#MetaDescription').val(),
+        Status: $('#Status').val(),
+        CreatedDate: $('#CreatedDate').val(),
+        CreatedBy: $('#CreatedBy').val(),
+        ShowOnHome: $('#ShowOnHome').val()
     };
 
     $.ajax({
-        url: "/Admin/Quotation/Update",
-        data: JSON.stringify(quoObj),
+        url: "/Admin/BookCategory/Update",
+        data: JSON.stringify(categoryObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
             loadData(1, "");
             $('#myModal').modal('hide');
-            $('#QuotationID').val("");
-            $('#NameQuotation').val("");
+            $('#CategoryName').val("");
+            $('#SeoTitle').val("");
+            $('#MetaKeywords').val("");
+            $('#MetaDescription').val("");
+            $('#Status').val("");
+            $('#CreatedDate').val("");
+            $('#CreatedBy').val("");
+            $('#ShowOnHome').val("");
             $.notify(result.message, {
                 globalPosition: "top center",
                 className: "success"
@@ -143,12 +184,12 @@ function Update() {
     });
 }
 
-//Delete by id
+//function for deleting employee's record
 function Delele(ID) {
     var ans = confirm("Are you sure you want to delete this Record?");
     if (ans) {
         $.ajax({
-            url: "/Admin/Quotation/Delete/" + ID,
+            url: "/Admin/BookCategory/Delete/" + ID,
             type: "POST",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -166,24 +207,37 @@ function Delele(ID) {
     }
 }
 
-//clear textbox
+//Function for clearing the textboxes
 function clearTextBox() {
-    $('#QuotationID').val("");
-    $('#NameQuotation').val("");
+    $('#CategoryID').val("");
+    $('#CategoryName').val("");
+    $('#SeoTitle').val("");
+    $('#MetaKeywords').val("");
+    $('#MetaDescription').val("");
+    $('#Status').val("");
+    $('#CreatedDate').val("");
+    $('#CreatedBy').val("");
+    $('#ShowOnHome').val("");
     $('#btnUpdate').hide();
     $('#btnAdd').show();
-    $('#QuotationID').css('border-color', 'lightgrey');
-    $('#NameQuotation').css('border-color', 'lightgrey');
+    $('#CategoryName').css('border-color', 'lightgrey');
+    $('#SeoTitle').css('border-color', 'lightgrey');
+    $('#MetaKeywords').css('border-color', 'lightgrey');
+    $('#MetaDescription').css('border-color', 'lightgrey');
+    $('#Status').css('border-color', 'lightgrey');
+    $('#CreatedDate').css('border-color', 'lightgrey');
+    $('#CreatedBy').css('border-color', 'lightgrey');
+    $('#ShowOnHome').css('border-color', 'lightgrey');
 }
 //Valdidation using jquery
 function validate() {
     var isValid = true;
-    if ($('#NameQuotation').val().trim() == "") {
-        $('#NameQuotation').css('border-color', 'Red');
+    if ($('#CategoryName').val().trim() == "") {
+        $('#CategoryName').css('border-color', 'Red');
         isValid = false;
     }
     else {
-        $('#NameQuotation').css('border-color', 'lightgrey');
+        $('#CategoryName').css('border-color', 'lightgrey');
     }
     return isValid;
 }

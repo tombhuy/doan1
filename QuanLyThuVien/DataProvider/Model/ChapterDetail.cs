@@ -16,7 +16,9 @@ namespace DataProvider.Model
     {
         public int IDBook { get; set; }
         public int ChapterID { get; set; }
-        public string Content { get; set; }
         public string NameChapter { get; set; }
+        public string Content { get; set; }
+    
+        public virtual Book Book { get; set; }
     }
 }

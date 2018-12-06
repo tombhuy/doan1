@@ -6,15 +6,18 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4ffd83da9cef443197190e1ce4b4b7f8" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyThuVienModel.About" Width="1.5" PointX="1.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.BookCategory" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.ChapterDetail" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.Contact" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.Footer" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.Quotation" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.TypeUser" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.User" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.Author" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.Book" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.Author" Width="1.5" PointX="9.375" PointY="1.875" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.BookCategory" Width="1.5" PointX="9" PointY="4.75" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.Book" Width="1.5" PointX="11.625" PointY="1" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.ChapterDetail" Width="1.5" PointX="13.875" PointY="1.875" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_Books_Authors" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_Books_BookCategories" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_ChapterDetails_Books" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
