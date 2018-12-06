@@ -1,37 +1,124 @@
-﻿@model DataProvider.Model.Author
-
+﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
 }
 
-@section namepage{
-    Danh sách tác giả
-    }
 
-<div>
-    <h4>List Author</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AuthorName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AuthorName)
-        </dd>
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Areas/Admin/Scripts/notify.min.js"></script>
+    <script src="~/Areas/Admin/Scripts/Author.js"></script>
+}
+<!DOCTYPE html>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DescriptionAuthor)
-        </dt>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Author Record</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Author</button>
+                                </div>
+                                <div class="col-sm-6" style="text-align:right">
+                                    <label>Search: <input type="text" class="form-control" id="inputKeyword" /></label>
+                                    <button class="btn" onclick="SearchClick()">Tìm</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <table id="#mytab" class="table table-hover dataTable table-bordered">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>
+                                                    ID
+                                                </th>
+                                                <th>
+                                                    Tên tác giả
+                                                </th>
+                                                <th>
+                                                    Mô tả về tác giả
+                                                </th>
+                                                <th>
+                                                    Alias
+                                                </th>
+                                                <th width="150px">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align: right">
+                                <div class="dataTables_paginate paging_simple_numbers" style="padding-right: 15px">
+                                    <ul class="pagination" id="phantrang" style="margin-top: -10px;margin-bottom: 0px;">
 
-        <dd>
-            @Html.DisplayFor(model => model.DescriptionAuthor)
-        </dd>
+                                        <li class="paginate_button previous disabled">
+                                            <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a>
+                                        </li>
+                                        <li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
+                                        <li class="paginate_button next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">&times;</span></button>*@
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="AuthorID">ID</label>
+                            <input type="text" class="form-control" id="AuthorID" placeholder="Id" disabled="disabled" />
+                        </div>
+                        <div class="form-group">
+                            <label for="AuthorName">Tên tác giả</label>
+                            <input type="text" class="form-control" id="AuthorName" placeholder="Tên tác giả" />
+                        </div>
+                        <div class="form-group">
+                            <label for="DescriptionAuthor">Mô tả</label>
+                            <input type="text" class="form-control" id="DescriptionAuthor" placeholder="..."/>
+                        </div>
+                        <div class="form-group">
+                            <label for="Alias">Alias</label>
+                            <input type="text" class="form-control" id="Alias" placeholder="ví dụ:bui-minh-huy" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-    </dl>
-</div>
-@*<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AuthorID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
+

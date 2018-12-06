@@ -17,6 +17,7 @@ namespace DataProvider.Model
         public int BookID { get; set; }
         public string BookName { get; set; }
         public string Description { get; set; }
+        public string Alias { get; set; }
         public string AuthorID { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> ViewCount { get; set; }
@@ -24,6 +25,5 @@ namespace DataProvider.Model
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<bool> TopHot { get; set; }
-        public Nullable<int> ChapterID { get; set; }
     }
 }

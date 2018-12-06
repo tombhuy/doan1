@@ -6,7 +6,7 @@ $(document).ready(function () {
 //Load Data function
 function loadData(id, searchString) {
     $.ajax({
-        url: "/Admin/Quotation/List",
+        url: "/Admin/Author/List",
         type: "GET",
         contentType: "application/json;charset=utf-8",
         data: { "page": id, "searchKey": searchString },
@@ -15,9 +15,11 @@ function loadData(id, searchString) {
             var html = '';
             $.each(result.data, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.QuotationID + '</td>';
-                html += '<td>' + item.NameQuotation + '</td>';
-                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.QuotationID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.QuotationID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '<td>' + item.AuthorID + '</td>';
+                html += '<td>' + item.AuthorName + '</td>';
+                html += '<td>' + item.DescriptionAuthor + '</td>';
+                html += '<td>' + item.Alias + '</td>';
+                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.AuthorID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.AuthorID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
@@ -61,13 +63,15 @@ function Add() {
     if (res == false) {
         return false;
     }
-    var quoObj = {
-        QuotationID: $('#QuotationID').val(),
-        NameQuotation: $('#NameQuotation').val(),
+    var autObj = {
+        AuthorID: $('#AuthorID').val(),
+        AuthorName: $('#AuthorName').val(),
+        DescriptionAuthor: $('#DescriptionAuthor').val(),
+        Alias: $('#Alias').val(),
     };
     $.ajax({
-        url: "/Admin/Quotation/Add",
-        data: JSON.stringify(quoObj),
+        url: "/Admin/Author/Add",
+        data: JSON.stringify(autObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -86,17 +90,21 @@ function Add() {
 }
 
 //Function for getting the Data Based upon Employee ID
-function getbyID(QuoID) {
-    $('#QuotationID').css('border-color', 'lightgrey');
-    $('#NameQuotation').css('border-color', 'lightgrey');
+function getbyID(AutID) {
+    $('#AuthorName').css('border-color', 'lightgrey');
+    $('#DescriptionAuthor').css('border-color', 'lightgrey');
+    $('#Alias').css('border-color', 'lightgrey');
     $.ajax({
-        url: "/Admin/Quotation/GetbyID/" + QuoID,
+        url: "/Admin/Author/GetbyID/" + AutID,
         typr: "GET",
         contentType: "application/json;charset=UTF-8",
         dataType: "json",
         success: function (result) {
-            $('#QuotationID').val(result.QuotationID);
-            $('#NameQuotation').val(result.NameQuotation);
+            $('#AuthorID').val(result.AuthorID);
+            $('#AuthorName').val(result.AuthorName);
+            $('#DescriptionAuthor').val(result.DescriptionAuthor);
+            $('#Alias').val(result.Alias);
+
             $('#myModal').modal('show');
             $('#btnUpdate').show();
             $('#btnAdd').hide();
@@ -115,22 +123,25 @@ function Update() {
         return false;
     }
 
-    var quoObj = {
-        QuotationID: $('#QuotationID').val(),
-        NameQuotation: $('#NameQuotation').val(),
+    var autObj = {
+        AuthorID: $('#AuthorID').val(),
+        AuthorName: $('#AuthorName').val(),
+        DescriptionAuthor: $('#DescriptionAuthor').val(),
+        Alias: $('#Alias').val(),
     };
 
     $.ajax({
-        url: "/Admin/Quotation/Update",
-        data: JSON.stringify(quoObj),
+        url: "/Admin/Author/Update",
+        data: JSON.stringify(autObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
             loadData(1, "");
             $('#myModal').modal('hide');
-            $('#QuotationID').val("");
-            $('#NameQuotation').val("");
+            $('#AuthorName').val("");
+            $('#DescriptionAuthor').val("");
+            $('#Alias').val("");
             $.notify(result.message, {
                 globalPosition: "top center",
                 className: "success"
@@ -148,7 +159,7 @@ function Delele(ID) {
     var ans = confirm("Are you sure you want to delete this Record?");
     if (ans) {
         $.ajax({
-            url: "/Admin/Quotation/Delete/" + ID,
+            url: "/Admin/Author/Delete/" + ID,
             type: "POST",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -168,22 +179,32 @@ function Delele(ID) {
 
 //Function for clearing the textboxes
 function clearTextBox() {
-    $('#QuotationID').val("");
-    $('#NameQuotation').val("");
+    $('#AuthorID').val("");
+    $('#AuthorName').val("");
+    $('#DescriptionAuthor').val("");
+    $('#Alias').val("");
     $('#btnUpdate').hide();
     $('#btnAdd').show();
-    $('#QuotationID').css('border-color', 'lightgrey');
-    $('#NameQuotation').css('border-color', 'lightgrey');
+    $('#AuthorName').css('border-color', 'lightgrey');
+    $('#DescriptionAuthor').css('border-color', 'lightgrey');
+    $('#Alias').css('border-color', 'lightgrey');
 }
 //Valdidation using jquery
 function validate() {
     var isValid = true;
-    if ($('#NameQuotation').val().trim() == "") {
-        $('#NameQuotation').css('border-color', 'Red');
+    if ($('#AuthorName').val().trim() == "") {
+        $('#AuthorName').css('border-color', 'Red');
         isValid = false;
     }
     else {
-        $('#NameQuotation').css('border-color', 'lightgrey');
+        $('#AuthorName').css('border-color', 'lightgrey');
+    }
+    if ($('#Alias').val().trim() == "") {
+        $('#Alias').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#Alias').css('border-color', 'lightgrey');
     }
     return isValid;
 }

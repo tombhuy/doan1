@@ -17,5 +17,6 @@ namespace DataProvider.Model
         public int AuthorID { get; set; }
         public string AuthorName { get; set; }
         public string DescriptionAuthor { get; set; }
+        public string Alias { get; set; }
     }
 }

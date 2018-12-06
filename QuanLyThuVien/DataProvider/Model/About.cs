@@ -11,14 +11,11 @@ namespace DataProvider.Model
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class About
     {
         public int ID { get; set; }
         public string Name { get; set; }
-
-        [StringLength(1000)]
         public string Description { get; set; }
     }
 }

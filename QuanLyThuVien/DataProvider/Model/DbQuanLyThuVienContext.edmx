@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyThuVienModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyThuVienModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Abouts">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Authors">
           <Key>
@@ -20,6 +20,7 @@
           <Property Name="AuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AuthorName" Type="nvarchar" MaxLength="100" />
           <Property Name="DescriptionAuthor" Type="nvarchar" MaxLength="500" />
+          <Property Name="Alias" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="BookCategories">
           <Key>
@@ -42,14 +43,14 @@
           <Property Name="BookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BookName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Alias" Type="varchar" MaxLength="250" />
           <Property Name="AuthorID" Type="nvarchar" MaxLength="50" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="ViewCount" Type="int" />
-          <Property Name="MoreImages" Type="xml" />
+          <Property Name="MoreImages" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="TopHot" Type="bit" />
-          <Property Name="ChapterID" Type="int" />
         </EntityType>
         <EntityType Name="ChapterDetails">
           <Key>
@@ -58,6 +59,7 @@
           </Key>
           <Property Name="IDBook" Type="int" Nullable="false" />
           <Property Name="ChapterID" Type="int" Nullable="false" />
+          <Property Name="NameChapter" Type="nvarchar" MaxLength="250" />
           <Property Name="Content" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Contacts">
@@ -68,7 +70,7 @@
           <Property Name="ContactName" Type="nvarchar" MaxLength="250" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="Footer">
@@ -120,8 +122,7 @@
           <EntitySet Name="TypeUsers" EntityType="Self.TypeUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyThuVienModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -131,15 +132,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Author">
-          <Key>
-            <PropertyRef Name="AuthorID" />
-          </Key>
-          <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AuthorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionAuthor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BookCategory">
           <Key>
@@ -155,22 +148,6 @@
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ShowOnHome" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Book">
-          <Key>
-            <PropertyRef Name="BookID" />
-          </Key>
-          <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="AuthorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryID" Type="Int32" />
-          <Property Name="ViewCount" Type="Int32" />
-          <Property Name="MoreImages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TopHot" Type="Boolean" />
-          <Property Name="ChapterID" Type="Int32" />
-        </EntityType>
         <EntityType Name="ChapterDetail">
           <Key>
             <PropertyRef Name="IDBook" />
@@ -179,6 +156,7 @@
           <Property Name="IDBook" Type="Int32" Nullable="false" />
           <Property Name="ChapterID" Type="Int32" Nullable="false" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameChapter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -188,7 +166,7 @@
           <Property Name="ContactName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
         </EntityType>
         <EntityType Name="Footer">
@@ -230,16 +208,41 @@
         </EntityType>
         <EntityContainer Name="DbQuanLyThuVienContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Abouts" EntityType="Self.About" />
-          <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="BookCategories" EntityType="Self.BookCategory" />
-          <EntitySet Name="Books" EntityType="Self.Book" />
           <EntitySet Name="ChapterDetails" EntityType="Self.ChapterDetail" />
           <EntitySet Name="Contacts" EntityType="Self.Contact" />
           <EntitySet Name="Footers" EntityType="Self.Footer" />
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="TypeUsers" EntityType="Self.TypeUser" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Authors" EntityType="QuanLyThuVienModel.Author" />
+          <EntitySet Name="Books" EntityType="QuanLyThuVienModel.Book" />
         </EntityContainer>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AuthorID" />
+          </Key>
+          <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionAuthor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="ViewCount" Type="Int32" />
+          <Property Name="MoreImages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TopHot" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -252,15 +255,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Authors">
-            <EntityTypeMapping TypeName="QuanLyThuVienModel.Author">
-              <MappingFragment StoreEntitySet="Authors">
-                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
-                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
-                <ScalarProperty Name="DescriptionAuthor" ColumnName="DescriptionAuthor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -279,26 +273,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Books">
-            <EntityTypeMapping TypeName="QuanLyThuVienModel.Book">
-              <MappingFragment StoreEntitySet="Books">
-                <ScalarProperty Name="BookID" ColumnName="BookID" />
-                <ScalarProperty Name="BookName" ColumnName="BookName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
-                <ScalarProperty Name="MoreImages" ColumnName="MoreImages" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="TopHot" ColumnName="TopHot" />
-                <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ChapterDetails">
             <EntityTypeMapping TypeName="QuanLyThuVienModel.ChapterDetail">
               <MappingFragment StoreEntitySet="ChapterDetails">
+                <ScalarProperty Name="NameChapter" ColumnName="NameChapter" />
                 <ScalarProperty Name="IDBook" ColumnName="IDBook" />
                 <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -355,6 +333,33 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.Author">
+              <MappingFragment StoreEntitySet="Authors">
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="DescriptionAuthor" ColumnName="DescriptionAuthor" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="TopHot" ColumnName="TopHot" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="MoreImages" ColumnName="MoreImages" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
