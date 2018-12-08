@@ -15,14 +15,13 @@ namespace BusinessLogic.Repository.Base
         int checkLogin(string userName, string passWord);
         IPagedList<User> GetAllWithPageList(int? page, int pageSize);
         IPagedList<User> GetAllWithPageListSearch(int? page, int pageSize, string searchString);
+        User GetUserByUsername(string username);
     }
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        DbQuanLyThuVienContext dbContext = null;
         public int checkLogin(string userName, string passWord)
         {
-            dbContext = new DbQuanLyThuVienContext();
-            var usr = dbContext.Users.FirstOrDefault(u => u.UserName == userName);
+            var usr = _dbContext.Users.FirstOrDefault(u => u.UserName == userName);
 
             if(usr!=null)
             {
@@ -66,6 +65,12 @@ namespace BusinessLogic.Repository.Base
                 result = result.Where(x => x.UserID==id||x.UserName.Contains(searchString) || x.Password.Contains(searchString) || x.Name.Contains(searchString) || x.Address.Contains(searchString) || x.Email.Contains(searchString) || x.Phone.Contains(searchString));
             }
             return result.OrderBy(x => x.UserID).ToPagedList(pageNumber, pageSize);
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            var usr = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
+            return usr;
         }
     }
 }

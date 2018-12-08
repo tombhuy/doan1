@@ -64,6 +64,7 @@
     <Compile Include="Repository\Base\IRepository.cs" />
     <Compile Include="Repository\Base\UnitOfWork.cs" />
     <Compile Include="Repository\BookCategoryRepository.cs" />
+    <Compile Include="Repository\BookRepository.cs" />
     <Compile Include="Repository\ChapterDetailRepository.cs" />
     <Compile Include="Repository\QuotationRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
