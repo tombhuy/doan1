@@ -21,7 +21,8 @@ function loadData(id, searchString) {
                 html += '<td>' + item.MetaKeywords + '</td>';
                 html += '<td>' + item.MetaDescription + '</td>';
                 html += '<td>' + item.Status + '</td>';
-                html += '<td>' + item.CreatedDate + '</td>';
+                var dt = convertDateTime(item.CreatedDate);
+                html += '<td>' + dt + '</td>';
                 html += '<td>' + item.CreatedBy + '</td>';
                 html += '<td>' + item.ShowOnHome + '</td>';
                 html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.CategoryID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.CategoryID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
@@ -249,3 +250,26 @@ function SearchClick() {
 }
 
 
+function convertDateTime(datetimeString) {
+    if (datetimeString != null) {
+        var dateString = datetimeString.substr(6);
+        var currentTime = new Date(parseInt(dateString));
+        var month = currentTime.getMonth() + 1;
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var hour = currentTime.getHours()
+        var minute = currentTime.getMinutes()
+        if (minute < 10) {
+            minute = "0" + minute;
+        }
+        var second = currentTime.getSeconds()
+        if (second < 10) {
+            second = "0" + second;
+        }
+        var result = day + "/" + month + "/" + year + " " + hour + ":" + minute + ":" + second;
+    }
+    else {
+        result = "Null";
+    }
+    return result;
+}

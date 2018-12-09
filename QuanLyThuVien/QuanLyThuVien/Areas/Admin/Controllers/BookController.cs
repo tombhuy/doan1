@@ -114,5 +114,24 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
 
         }
 
+        public ActionResult GetAuthor()
+        {
+            var listAuthor = authorRepo.GetAll().Select(x=>new {
+                AuthorID=x.AuthorID,
+                AuthorName=x.AuthorName
+            });
+            return Json(listAuthor, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetCategory()
+        {
+            var listCategory = bookCategoryRepo.GetAll().Select(x => new {
+                CategoryID = x.CategoryID,
+                CategoryName = x.CategoryName
+            });
+            return Json(listCategory, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

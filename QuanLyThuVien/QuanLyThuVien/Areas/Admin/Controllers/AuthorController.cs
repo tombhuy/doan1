@@ -20,7 +20,12 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         public JsonResult List(int page = 1, string searchKey = "")
         {
             var result = authorRepo.GetAllWithPageListSearch(page, 12, searchKey);
-            return Json(new { data = result, pageNumber = result.PageCount, keyword = searchKey }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = result.Select(x => new {
+                AuthorID = x.AuthorID,
+                AuthorName=x.AuthorName,
+                DescriptionAuthor=x.DescriptionAuthor,
+                Alias=x.Alias
+            }), pageNumber = result.PageCount, keyword = searchKey }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Add(Author auth)

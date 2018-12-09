@@ -16,6 +16,22 @@ namespace BusinessLogic.Repository
     }
     public class ChapterDetailRepository:BaseRepository<ChapterDetail>,IChapterDetailRepository
     {
+        public ChapterDetail getByID2(int bookid,int chapterid)
+        {
+            if (bookid != 0)
+            {
+                if (chapterid != 0)
+                {
+                    return _dbContext.ChapterDetails.Where(x => x.IDBook == bookid & x.ChapterID == chapterid).FirstOrDefault();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
         public IPagedList<ChapterDetail> GetAllWithPageListSearch(int? page, int pageSize, string searchString)
         {
             int pageNumber = (page ?? 1);
@@ -29,5 +45,6 @@ namespace BusinessLogic.Repository
             }
             return result.OrderBy(x => x.ChapterID).ToPagedList(pageNumber, pageSize);
         }
+
     }
 }

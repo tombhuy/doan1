@@ -17,7 +17,38 @@
             finder.popup();
         })
     </script>
+
+<script>
+    $("#btnReloadAuthor").on('click', function (e) {
+        var url = '@Url.Action("GetAuthor", "Book")'; // Don't hard code your url's!
+        var authornames = $('#ddlAuthor'); // cache it
+        e.preventDefault(); e.preventDefault();
+        $.getJSON(url, function (response) {
+            authornames.empty(); // remove any existing options
+            $.each(response, function (index, item) { // item is now an object containing properties ID and Text
+                authornames.append($('<option></option>').text(item.AuthorName).val(item.AuthorID));
+            });
+        });
+    });
+</script>
+
+<script>
+
+    $("#btnReloadCategory").on('click', function (e) {
+        var url = '@Url.Action("GetCategory", "Book")'; // Don't hard code your url's!
+        var categorynames = $('#ddlCategory'); // cache it
+        e.preventDefault(); e.preventDefault();
+        $.getJSON(url, function (response) {
+            categorynames.empty(); // remove any existing options
+            $.each(response, function (index, item) { // item is now an object containing properties ID and Text
+                categorynames.append($('<option></option>').text(item.CategoryName).val(item.CategoryID));
+            });
+        });
+    });
+</script>
+
 }
+
 
 <div class="col-md-6">
     <div class="box box-primary">
@@ -43,13 +74,15 @@
                 </div>
                 <div class="form-group">
                     <label>Tác giả</label>
-                    @Html.DropDownListFor(model => model.AuthorID, ViewBag.AuthorList as SelectList, "",new { @class = "form-control" })
-                    <button type="button" id="btnNewAuthor" class="btn btn-default" style="margin-top: 10px">Thêm mới tác giả</button>
+                    @Html.DropDownListFor(model => model.AuthorID, ViewBag.AuthorList as SelectList, "",new { @class = "form-control",@id="ddlAuthor" })
+                    <a href='@Url.Action("Index","Author")' id="btnNewAuthor" class="btn btn-default" target="_blank"  style="margin-top: 10px">Thêm mới tác giả</a>
+                    <button type="button" class="btn btn-default" id="btnReloadAuthor" style="margin-top: 10px">Reload</button>
                 </div>
                 <div class="form-group">
                     <label>Thể loại</label>
-                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.ListCategory as SelectList, "",new { @class = "form-control" })
-                    <button type="button" id="btnNewCategory" class="btn btn-default" style="margin-top: 10px">Thêm mới thể loại</button>
+                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.ListCategory as SelectList, "",new { @class = "form-control" ,@id="ddlCategory"})
+                    <a href='@Url.Action("Index","BookCategory")' id="btnNewCategory" class="btn btn-default" style="margin-top: 10px">Thêm mới thể loại</a>\
+                    <button type="button" class="btn btn-default" id="btnReloadCategory" style="margin-top: 10px">Reload</button>
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>
@@ -72,99 +105,7 @@
 }
     </div>
 </div>
-<!--Modal thêm mới tác giả-->
-@*<div class="modal fade" id="modalInputNewAuthor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Them mới tác giả</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="AuthorID">ID</label>
-                        <input type="text" class="form-control" id="AuthorID" placeholder="Id" disabled="disabled" />
-                    </div>
-                    <div class="form-group">
-                        <label for="AuthorName">Tên tác giả</label>
-                        <input type="text" class="form-control" id="AuthorName" placeholder="Tên tác giả" />
-                    </div>
-                    <div class="form-group">
-                        <label for="DescriptionAuthor">Mô tả</label>
-                        <input type="text" class="form-control" id="DescriptionAuthor" placeholder="..." />
-                    </div>
-                    <div class="form-group">
-                        <label for="Alias">Alias</label>
-                        <input type="text" class="form-control" id="Alias" placeholder="ví dụ:bui-minh-huy" />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-Modal thêm mới thể loại
 
-<div class="modal fade" id="modalInputNewCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Thêm mới thể loại sách</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="CategoryID">ID</label>
-                        <input type="text" class="form-control" id="CategoryID" placeholder="Id" disabled="disabled" />
-                    </div>
-                    <div class="form-group">
-                        <label for="CategoryName">Tên thể loại</label>
-                        <input type="text" class="form-control" id="CategoryName" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="SeoTitle">Tiêu đề seo</label>
-                        <input type="text" class="form-control" id="SeoTitle" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="MetaKeywords">Meta Keywords</label>
-                        <input type="text" class="form-control" id="MetaKeywords" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="MetaDescription">Meta Description</label>
-                        <input type="text" class="form-control" id="MetaDescription" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Status">Trạng thái</label>
-                        <input type="text" class="form-control" id="Status" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="CreatedDate">Ngày tạo</label>
-                        <input type="text" class="form-control" id="CreatedDate" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="CreatedBy">Tạo bởi</label>
-                        <input type="text" class="form-control" id="CreatedBy" placeholder="Quotation" />
-                    </div>
-                    <div class="form-group">
-                        <label for="ShowOnHome">Show on home</label>
-                        <input type="text" class="form-control" id="ShowOnHome" placeholder="Quotation" />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-
-
+@Html.Partial("partial_Ebook")
 
 

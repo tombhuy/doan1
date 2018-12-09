@@ -20,7 +20,17 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         public JsonResult List(int page = 1, string searchKey = "")
         {
             var result = bookCateRepo.GetAllWithPageListSearch(page, 12, searchKey);
-            return Json(new { data = result, pageNumber = result.PageCount, keyword = searchKey }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = result.Select(x=>new {
+                CategoryID=x.CategoryID,
+                CategoryName=x.CategoryName,
+                SeoTitle=x.SeoTitle,
+                MetaKeywords=x.MetaKeywords,
+                MetaDescription=x.MetaDescription,
+                Status=x.Status,
+                CreatedDate=x.CreatedDate,
+                CreatedBy=x.CreatedBy,
+                ShowOnHome=x.ShowOnHome
+            }), pageNumber = result.PageCount, keyword = searchKey }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Add(BookCategory bookcate)
@@ -40,8 +50,18 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         }
         public JsonResult GetbyID(int ID)
         {
-            var user = bookCateRepo.GetById(ID);
-            return Json(user, JsonRequestBehavior.AllowGet);
+            var bookcategory = bookCateRepo.GetById(ID);
+            return Json(new {
+                CategoryID =bookcategory.CategoryID,
+                CategoryName=bookcategory.CategoryName,
+                SeoTitle=bookcategory.SeoTitle,
+                MetaKeywords=bookcategory.MetaKeywords,
+                MetaDescription=bookcategory.MetaDescription,
+                Status=bookcategory.Status,
+                CreatedDate=bookcategory.CreatedDate,
+                CreatedBy=bookcategory.CreatedBy,
+                ShowOnHome=bookcategory.ShowOnHome
+            }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Update(BookCategory bookcate)
         {
@@ -69,6 +89,8 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
                 return Json(new { success = false, message = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
 
     }
 }
