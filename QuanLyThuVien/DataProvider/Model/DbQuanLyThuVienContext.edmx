@@ -47,7 +47,7 @@
           <Property Name="AuthorID" Type="int" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="ViewCount" Type="int" />
-          <Property Name="MoreImages" Type="varchar" MaxLength="50" />
+          <Property Name="MoreImages" Type="varchar" MaxLength="250" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="TopHot" Type="bit" />
@@ -59,6 +59,7 @@
           </Key>
           <Property Name="IDBook" Type="int" Nullable="false" />
           <Property Name="ChapterID" Type="int" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="250" />
           <Property Name="NameChapter" Type="nvarchar" MaxLength="250" />
           <Property Name="Content" Type="nvarchar(max)" />
         </EntityType>
@@ -240,7 +241,6 @@
           <EntitySet Name="Authors" EntityType="QuanLyThuVienModel.Author" />
           <EntitySet Name="BookCategories" EntityType="QuanLyThuVienModel.BookCategory" />
           <EntitySet Name="Books" EntityType="QuanLyThuVienModel.Book" />
-          <EntitySet Name="ChapterDetails" EntityType="QuanLyThuVienModel.ChapterDetail" />
           <AssociationSet Name="FK_Books_Authors" Association="QuanLyThuVienModel.FK_Books_Authors">
             <End Role="Author" EntitySet="Authors" />
             <End Role="Book" EntitySet="Books" />
@@ -249,6 +249,7 @@
             <End Role="BookCategory" EntitySet="BookCategories" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
+          <EntitySet Name="ChapterDetails" EntityType="QuanLyThuVienModel.ChapterDetail" />
           <AssociationSet Name="FK_ChapterDetails_Books" Association="QuanLyThuVienModel.FK_ChapterDetails_Books">
             <End Role="Book" EntitySet="Books" />
             <End Role="ChapterDetail" EntitySet="ChapterDetails" />
@@ -290,24 +291,13 @@
           <Property Name="AuthorID" Type="Int32" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="ViewCount" Type="Int32" />
-          <Property Name="MoreImages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MoreImages" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TopHot" Type="Boolean" />
           <NavigationProperty Name="Author" Relationship="QuanLyThuVienModel.FK_Books_Authors" FromRole="Book" ToRole="Author" />
           <NavigationProperty Name="BookCategory" Relationship="QuanLyThuVienModel.FK_Books_BookCategories" FromRole="Book" ToRole="BookCategory" />
           <NavigationProperty Name="ChapterDetails" Relationship="QuanLyThuVienModel.FK_ChapterDetails_Books" FromRole="Book" ToRole="ChapterDetail" />
-        </EntityType>
-        <EntityType Name="ChapterDetail">
-          <Key>
-            <PropertyRef Name="IDBook" />
-            <PropertyRef Name="ChapterID" />
-          </Key>
-          <Property Name="IDBook" Type="Int32" Nullable="false" />
-          <Property Name="ChapterID" Type="Int32" Nullable="false" />
-          <Property Name="NameChapter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Book" Relationship="QuanLyThuVienModel.FK_ChapterDetails_Books" FromRole="ChapterDetail" ToRole="Book" />
         </EntityType>
         <Association Name="FK_Books_Authors">
           <End Type="QuanLyThuVienModel.Author" Role="Author" Multiplicity="0..1" />
@@ -333,6 +323,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ChapterDetail">
+          <Key>
+            <PropertyRef Name="IDBook" />
+            <PropertyRef Name="ChapterID" />
+          </Key>
+          <Property Name="IDBook" Type="Int32" Nullable="false" />
+          <Property Name="ChapterID" Type="Int32" Nullable="false" />
+          <Property Name="Alias" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NameChapter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Book" Relationship="QuanLyThuVienModel.FK_ChapterDetails_Books" FromRole="ChapterDetail" ToRole="Book" />
+        </EntityType>
         <Association Name="FK_ChapterDetails_Books">
           <End Type="QuanLyThuVienModel.Book" Role="Book" Multiplicity="1" />
           <End Type="QuanLyThuVienModel.ChapterDetail" Role="ChapterDetail" Multiplicity="*" />
@@ -460,6 +462,7 @@
               <MappingFragment StoreEntitySet="ChapterDetails">
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="NameChapter" ColumnName="NameChapter" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
                 <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
                 <ScalarProperty Name="IDBook" ColumnName="IDBook" />
               </MappingFragment>

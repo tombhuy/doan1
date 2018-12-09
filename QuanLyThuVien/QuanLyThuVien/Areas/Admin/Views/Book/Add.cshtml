@@ -1,7 +1,6 @@
 ﻿@model DataProvider.Model.Book
 
 @{
-    ViewBag.Title = "Add";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
 }
 @section scripts{
@@ -20,107 +19,152 @@
     </script>
 }
 
-<h2>Add</h2>
-
-@using (Html.BeginForm()) 
+<div class="col-md-6">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+        </div>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Book</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Alias, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Alias, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AuthorID, "AuthorID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AuthorID, ViewBag.AuthorList as SelectList,"--Select--", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AuthorID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryID, ViewBag.ListCategory as SelectList, "None",htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.ViewCount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ViewCount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ViewCount, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MoreImages, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.MoreImages, new { htmlAttributes = new { @class = "form-control", @id = "txtImage" }, @id = "txtImage" })
-                <a id="btnSelectImage" href="#">Chọn</a>
-                @Html.ValidationMessageFor(model => model.MoreImages, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TopHot, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <form role="form">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="bookname">Tên sách</label>
+                    @Html.TextBoxFor(model => model.BookName, new { @class = "form-control", placeholder = "Nhập tên sách" })
+                </div>
+                <div class="form-group">
+                    <label>Mô tả</label>
+                    @Html.TextAreaFor(model=>model.Description, new { @class = "form-control", placeholder = "Nhập...", rows = "3" })
+                </div>
+                <div class="form-group">
+                    <label for="alias">Alias</label>
+                    @Html.TextBoxFor(model => model.Alias, new { @class = "form-control", placeholder = "Ví dụ: tony-buoi-sang" })
+                </div>
+                <div class="form-group">
+                    <label>Tác giả</label>
+                    @Html.DropDownListFor(model => model.AuthorID, ViewBag.AuthorList as SelectList, "",new { @class = "form-control" })
+                    <button type="button" id="btnNewAuthor" class="btn btn-default" style="margin-top: 10px">Thêm mới tác giả</button>
+                </div>
+                <div class="form-group">
+                    <label>Thể loại</label>
+                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.ListCategory as SelectList, "",new { @class = "form-control" })
+                    <button type="button" id="btnNewCategory" class="btn btn-default" style="margin-top: 10px">Thêm mới thể loại</button>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    @Html.TextBoxFor(model => model.MoreImages, new { @class = "form-control", @id = "txtImage" })
+                    <button type="button" id="btnSelectImage" class="btn btn-default" style="margin-top: 10px">Chọn file</button>
+                </div>
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.TopHot)
-                    @Html.ValidationMessageFor(model => model.TopHot, "", new { @class = "text-danger" })
+                    <label>
+                        @Html.EditorFor(model=>model.TopHot) Top Hot
+                    </label>
                 </div>
             </div>
-        </div>
+            <!-- /.box-body -->
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index","Book")'">Trở về</button>
+            </div>
+        </form>
+}
+    </div>
+</div>
+<!--Modal thêm mới tác giả-->
+@*<div class="modal fade" id="modalInputNewAuthor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Them mới tác giả</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="AuthorID">ID</label>
+                        <input type="text" class="form-control" id="AuthorID" placeholder="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="AuthorName">Tên tác giả</label>
+                        <input type="text" class="form-control" id="AuthorName" placeholder="Tên tác giả" />
+                    </div>
+                    <div class="form-group">
+                        <label for="DescriptionAuthor">Mô tả</label>
+                        <input type="text" class="form-control" id="DescriptionAuthor" placeholder="..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="Alias">Alias</label>
+                        <input type="text" class="form-control" id="Alias" placeholder="ví dụ:bui-minh-huy" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+Modal thêm mới thể loại
+
+<div class="modal fade" id="modalInputNewCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Thêm mới thể loại sách</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="CategoryID">ID</label>
+                        <input type="text" class="form-control" id="CategoryID" placeholder="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CategoryName">Tên thể loại</label>
+                        <input type="text" class="form-control" id="CategoryName" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="SeoTitle">Tiêu đề seo</label>
+                        <input type="text" class="form-control" id="SeoTitle" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="MetaKeywords">Meta Keywords</label>
+                        <input type="text" class="form-control" id="MetaKeywords" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="MetaDescription">Meta Description</label>
+                        <input type="text" class="form-control" id="MetaDescription" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Trạng thái</label>
+                        <input type="text" class="form-control" id="Status" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CreatedDate">Ngày tạo</label>
+                        <input type="text" class="form-control" id="CreatedDate" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CreatedBy">Tạo bởi</label>
+                        <input type="text" class="form-control" id="CreatedBy" placeholder="Quotation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ShowOnHome">Show on home</label>
+                        <input type="text" class="form-control" id="ShowOnHome" placeholder="Quotation" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+
+
+

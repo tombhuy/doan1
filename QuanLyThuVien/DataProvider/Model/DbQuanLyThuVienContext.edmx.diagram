@@ -11,12 +11,12 @@
         <EntityTypeShape EntityType="QuanLyThuVienModel.Quotation" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.TypeUser" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.User" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.Author" Width="1.5" PointX="9.375" PointY="1.875" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.Author" Width="1.5" PointX="9" PointY="1.625" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.BookCategory" Width="1.5" PointX="9" PointY="4.75" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.Book" Width="1.5" PointX="11.625" PointY="1" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.ChapterDetail" Width="1.5" PointX="13.875" PointY="1.875" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.Book" Width="1.5" PointX="11.875" PointY="4.25" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_Books_Authors" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_Books_BookCategories" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.ChapterDetail" Width="1.5" PointX="13.5" PointY="0.5" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_ChapterDetails_Books" />
       </Diagram>
     </edmx:Diagrams>

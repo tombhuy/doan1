@@ -1,5 +1,4 @@
-﻿/// <reference path="jquery-1.9.1.intellisense.js" />
-//Load Data in Table when documents is ready
+﻿
 $(document).ready(function () {
     loadData(1, "");
 });
@@ -23,11 +22,12 @@ function loadData(id, searchString) {
                 html += '<td>' + item.AuthorID + '</td>';
                 html += '<td>' + item.CategoryID + '</td>';
                 html += '<td>' + item.ViewCount + '</td>';
-                html += '<td>' + item.MoreImages + '</td>';
-                html += '<td>' + item.CreatedDate + '</td>';
+                html += '<td><img src="' + item.MoreImages + '" alt="anhbook" class="img-thumbnail" width="180" height="260"></td>'; //181 257
+                var dt = convertDateTime(item.CreatedDate);
+                html += '<td>' + dt + '</td>';
                 html += '<td>' + item.CreatedBy + '</td>';
                 html += '<td>' + item.TopHot + '</td>';
-                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.BookID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delele(' + item.BookID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '<td><a class="btn btn-default btn-sm" href="/Admin/Book/Edit/'+item.BookID+'"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="DeleteBook(' + item.BookID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
@@ -65,139 +65,14 @@ function loadData(id, searchString) {
     });
 }
 
-//Add Data Function 
-function Add() {
-    var res = validate();
-    if (res == false) {
-        return false;
-    }
-    var usrObj = {
-        UserID: $('#UserID').val(),
-        UserName: $('#UserName').val(),
-        Password: $('#Password').val(),
-        Name: $('#Name').val(),
-        Address: $('#Address').val(),
-        Email: $('#Email').val(),
-        Phone: $('#Phone').val(),
-        CreatedDate: $('#CreatedDate').val(),
-        Status: $('#Status').val(),
-        Type: $('#Type').val()
-    };
-    $.ajax({
-        url: "/Admin/User/Add",
-        data: JSON.stringify(usrObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            loadData(1, "");
-            $('#myModal').modal('hide');
-            $.notify(result.message, {
-                globalPosition: "top center",
-                className: "success"
-            });
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
 
-//Function for getting the Data Based upon Employee ID
-function getbyID(UsrID) {
-    $('#UserName').css('border-color', 'lightgrey');
-    $('#Password').css('border-color', 'lightgrey');
-    $('#Name').css('border-color', 'lightgrey');
-    $('#Address').css('border-color', 'lightgrey');
-    $('#Email').css('border-color', 'lightgrey');
-    $('#Phone').css('border-color', 'lightgrey');
-    $('#CreatedDate').css('border-color', 'lightgrey');
-    $('#Status').css('border-color', 'lightgrey');
-    $('#Type').css('border-color', 'lightgrey');
-    $.ajax({
-        url: "/Admin/User/GetbyID/" + UsrID,
-        typr: "GET",
-        contentType: "application/json;charset=UTF-8",
-        dataType: "json",
-        success: function (result) {
-            $('#UserID').val(result.UserID);
-            $('#UserName').val(result.UserName);
-            $('#Password').val(result.Password);
-            $('#Name').val(result.Name);
-            $('#Address').val(result.Address);
-            $('#Email').val(result.Email);
-            $('#Phone').val(result.Phone);
-            $('#CreatedDate').val(result.CreatedDate);
-            $('#Status').val(result.Status);
-            $('#Type').val(result.Type);
+//Lấy dữ liệu để trả về trang Edit
 
-            $('#myModal').modal('show');
-            $('#btnUpdate').show();
-            $('#btnAdd').hide();
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-    return false;
-}
-
-//function for updating employee's record
-function Update() {
-    var res = validate();
-    if (res == false) {
-        return false;
-    }
-
-    var usrObj = {
-        UserID: $('#UserID').val(),
-        UserName: $('#UserName').val(),
-        Password: $('#Password').val(),
-        Name: $('#Name').val(),
-        Address: $('#Address').val(),
-        Email: $('#Email').val(),
-        Phone: $('#Phone').val(),
-        CreatedDate: $('#CreatedDate').val(),
-        Status: $('#Status').val(),
-        Type: $('#Type').val()
-    };
-
-    $.ajax({
-        url: "/Admin/User/Update",
-        data: JSON.stringify(usrObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            loadData(1, "");
-            $('#myModal').modal('hide');
-            $('#UserName').val("");
-            $('#Password').val("");
-            $('#Name').val("");
-            $('#Address').val("");
-            $('#Email').val("");
-            $('#Phone').val("");
-            $('#CreatedDate').val("");
-            $('#Status').val("");
-            $('#Type').val("");
-            $.notify(result.message, {
-                globalPosition: "top center",
-                className: "success"
-            });
-
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//function for deleting employee's record
-function Delele(ID) {
+function DeleteBook(ID) {
     var ans = confirm("Are you sure you want to delete this Record?");
     if (ans) {
         $.ajax({
-            url: "/Admin/User/Delete/" + ID,
+            url: "/Admin/Book/Delete/" + ID,
             type: "POST",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -277,6 +152,30 @@ function validate() {
 function SearchClick() {
     var search_value = document.getElementById('inputKeyword').value;
     loadData(1, search_value);
+}
+
+function convertDateTime(datetimeString) {
+    if (datetimeString != null) {
+        var dateString = datetimeString.substr(6);
+        var currentTime = new Date(parseInt(dateString));
+        var month = currentTime.getMonth() + 1;
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var hour = currentTime.getHours()
+        var minute = currentTime.getMinutes()
+        if (minute < 10) {
+            minute = "0" + minute;
+        }
+        var second = currentTime.getSeconds()
+        if (second < 10) {
+            second = "0" + second;
+        }
+        var result = day + "/" + month + "/" + year + " " + hour + ":" + minute + ":" + second;
+    }
+    else {
+        result = "Null";
+    }
+    return result;
 }
 
 
