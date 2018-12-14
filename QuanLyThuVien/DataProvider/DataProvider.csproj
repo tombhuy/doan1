@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelView\EbookModelView.cs" />
+    <Compile Include="ModelView\EbookModelViewName.cs" />
     <Compile Include="Model\Author.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>

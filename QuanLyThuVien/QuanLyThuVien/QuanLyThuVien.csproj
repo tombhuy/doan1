@@ -1285,9 +1285,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\BookCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\BookController.cs" />
     <Compile Include="Areas\Admin\Controllers\ChapterDetailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EbookController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuotationController.cs" />
@@ -1328,7 +1330,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\Contact\" />
+    <Folder Include="Areas\Admin\Views\Ebook\" />
     <Folder Include="Content\admin2\.github\" />
     <Folder Include="Content\admin2\bower_components\" />
     <Folder Include="Content\admin2\build\" />

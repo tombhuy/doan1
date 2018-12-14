@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace QuanLyThuVien.Areas.Admin.Controllers
 {
-    public class HomeController : BaseController
+    public class EbookController : Controller
     {
-        // GET: Admin/Home
+        // GET: Admin/Ebook
         public ActionResult Index()
         {
             return View();

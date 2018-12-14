@@ -65,7 +65,9 @@
     <Compile Include="Repository\BookCategoryRepository.cs" />
     <Compile Include="Repository\BookRepository.cs" />
     <Compile Include="Repository\ChapterDetailRepository.cs" />
+    <Compile Include="Repository\EbookRepository.cs" />
     <Compile Include="Repository\QuotationRepository.cs" />
+    <Compile Include="Repository\TypeEbookRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\TypeUserRepository.cs" />
   </ItemGroup>

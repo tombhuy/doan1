@@ -12,6 +12,8 @@
     <script>
         $(document).ready(function () {
             loadListChapterByID(@Model.BookID,1);
+            loadListEbookByBook(@Model.BookID,1);
+            getListTypeEbook();
         });
     </script>
 
@@ -58,8 +60,9 @@
 
 }
 
+<div class="row">
+            @Html.Partial("partial_form_edit_book", Model)
+            @Html.Partial("partial_Chapter", Model)
+            @Html.Partial("partial_Ebook", Model)
+</div>
 
-
-@Html.Partial("partial_form_edit_book",Model)
-@Html.Partial("partial_Chapter",Model)
-@Html.Partial("partial_Ebook", Model)

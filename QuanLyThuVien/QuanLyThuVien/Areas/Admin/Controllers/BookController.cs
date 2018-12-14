@@ -18,6 +18,7 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         BookRepository bookRepo=new BookRepository();
         AuthorRepository authorRepo = new AuthorRepository();
         BookCategoryRepository bookCategoryRepo = new BookCategoryRepository();
+        EbookRepository ebookRepo = new EbookRepository();
         public ActionResult Index()
         {
             return View();
@@ -169,6 +170,70 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        //Lấy danh sách ebook hỗ trợ
+        public ActionResult GetAllListTypeEbook()
+        {
 
+            var listTypeEbook = new TypeEbookRepository().GetAll().Select(x => new
+            {
+                TypeEbookName = x.Name,
+                TypeEbookID = x.TypeID
+            });
+            return Json(listTypeEbook, JsonRequestBehavior.AllowGet);
+        }
+        
+       //Thêm mới một ebook
+        public ActionResult AddEbook(Ebook ebookObj)
+        {
+            try
+            {
+                ebookRepo.Create(ebookObj);
+                return Json(new { success = true, message = "Add Successfully",idbook=ebookObj.BookID }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, message = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        //Update một ebook
+        public JsonResult GetEbookByID(int idbook,int typeid)
+        {
+            var ebook = ebookRepo.GetEbookByID2(idbook,typeid);
+            return Json(new {
+                BookID = idbook,
+                TypeEbookID =ebook.TypeEbook,
+                LinkDownload=ebook.Link
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult UpdateEbook(Ebook ebookObj)
+        {
+            try
+            {
+                ebookRepo.Update(ebookObj);
+                return Json(new { success = true, message = "Update Successfully",idbook=ebookObj.BookID }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, message = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult DeleteEbook(int idbook,int typeid)
+        {
+            try
+            {
+                var ebook = ebookRepo.GetEbookByID2(idbook,typeid);
+                ebookRepo.Delete(ebook);
+                return Json(new { success = true, message = "Delete Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, message = ex.ToString(), idbook=idbook }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

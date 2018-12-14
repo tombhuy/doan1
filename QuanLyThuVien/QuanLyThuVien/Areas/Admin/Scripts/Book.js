@@ -91,62 +91,62 @@ function DeleteBook(ID) {
 }
 
 //Function for clearing the textboxes
-function clearTextBox() {
-    $('#UserID').val("");
-    $('#UserName').val("");
-    $('#Password').val("");
-    $('#Name').val("");
-    $('#Address').val("");
-    $('#Email').val("");
-    $('#Phone').val("");
-    $('#CreatedDate').val("");
-    $('#Status').val("");
-    $('#Type').val("");
-    $('#btnUpdate').hide();
-    $('#btnAdd').show();
-    $('#UserName').css('border-color', 'lightgrey');
-    $('#Password').css('border-color', 'lightgrey');
-    $('#Name').css('border-color', 'lightgrey');
-    $('#Address').css('border-color', 'lightgrey');
-    $('#Email').css('border-color', 'lightgrey');
-    $('#Phone').css('border-color', 'lightgrey');
-    $('#CreatedDate').css('border-color', 'lightgrey');
-    $('#Status').css('border-color', 'lightgrey');
-    $('#Type').css('border-color', 'lightgrey');
-}
+//function clearTextBox() {
+//    $('#UserID').val("");
+//    $('#UserName').val("");
+//    $('#Password').val("");
+//    $('#Name').val("");
+//    $('#Address').val("");
+//    $('#Email').val("");
+//    $('#Phone').val("");
+//    $('#CreatedDate').val("");
+//    $('#Status').val("");
+//    $('#Type').val("");
+//    $('#btnUpdate').hide();
+//    $('#btnAdd').show();
+//    $('#UserName').css('border-color', 'lightgrey');
+//    $('#Password').css('border-color', 'lightgrey');
+//    $('#Name').css('border-color', 'lightgrey');
+//    $('#Address').css('border-color', 'lightgrey');
+//    $('#Email').css('border-color', 'lightgrey');
+//    $('#Phone').css('border-color', 'lightgrey');
+//    $('#CreatedDate').css('border-color', 'lightgrey');
+//    $('#Status').css('border-color', 'lightgrey');
+//    $('#Type').css('border-color', 'lightgrey');
+//}
 //Valdidation using jquery
-function validate() {
-    var isValid = true;
-    if ($('#UserName').val().trim() == "") {
-        $('#UserName').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#UserName').css('border-color', 'lightgrey');
-    }
-    if ($('#Password').val().trim() == "") {
-        $('#Password').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Password').css('border-color', 'lightgrey');
-    }
-    if ($('#Name').val().trim() == "") {
-        $('#Name').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Name').css('border-color', 'lightgrey');
-    }
-    if ($('#Address').val().trim() == "") {
-        $('#Address').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Address').css('border-color', 'lightgrey');
-    }
-    return isValid;
-}
+//function validate() {
+//    var isValid = true;
+//    if ($('#UserName').val().trim() == "") {
+//        $('#UserName').css('border-color', 'Red');
+//        isValid = false;
+//    }
+//    else {
+//        $('#UserName').css('border-color', 'lightgrey');
+//    }
+//    if ($('#Password').val().trim() == "") {
+//        $('#Password').css('border-color', 'Red');
+//        isValid = false;
+//    }
+//    else {
+//        $('#Password').css('border-color', 'lightgrey');
+//    }
+//    if ($('#Name').val().trim() == "") {
+//        $('#Name').css('border-color', 'Red');
+//        isValid = false;
+//    }
+//    else {
+//        $('#Name').css('border-color', 'lightgrey');
+//    }
+//    if ($('#Address').val().trim() == "") {
+//        $('#Address').css('border-color', 'Red');
+//        isValid = false;
+//    }
+//    else {
+//        $('#Address').css('border-color', 'lightgrey');
+//    }
+//    return isValid;
+//}
 
 
 function SearchClick() {
@@ -177,9 +177,6 @@ function convertDateTime(datetimeString) {
     }
     return result;
 }
-
-
-
 
 
 
@@ -276,21 +273,22 @@ function DeleteChapter(bookID, chapterID) {
 
 function loadListEbookByBook(id, page) {
     $.ajax({
-        url: "/Admin/Book/GetAllChapterByID",
+        url: "/Admin/Book/GetAllEbookByIDBook",
         type: "GET",
         contentType: "application/json;charset=utf-8",
-        data: { "id": id, "page": page },
+        data: { "idbook": id, "page": page },
         dataType: "json",
         success: function (result) {
             var html = '';
             $.each(result.data, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.ID + '</td>';
-                html += '<td>' + item.NameChapter + '</td>';
-                html += '<td><a class="btn btn-default btn-sm" href="/Admin/ChapterDetail/Edit?idbook=' + result.idbook + '&idchapter=' + item.ID + '"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="DeleteChapter(' + result.idbook + ',' + item.ID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '<td>' + item.TypeEbookID + '</td>';
+                html += '<td>' + item.TypeEbookName + '</td>';
+                html += '<td>' + item.Link + '</td>';
+                html += '<td><a class="btn btn-default btn-sm" onclick="getEbookByID(' + result.idbook + ',' + item.TypeEbookID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="DeleteEbook(' + result.idbook + ',' + item.TypeEbookID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
                 html += '</tr>';
             });
-            $('.tablePhuLucbody').html(html);
+            $('.tableEbook').html(html);
 
             var paging = '';
             if (result.pageNumber == 1) {
@@ -299,25 +297,25 @@ function loadListEbookByBook(id, page) {
                 paging += '<li class="paginate_button next disabled"><a  href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
             }
             else {
-                if (id == 1) {
+                if (page == 1) {
                     paging += '<li class="paginate_button previous disabled"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
                     paging += '<li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>';
                 }
                 else {
-                    paging += '<li class="paginate_button previous btn"><a  onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
-                    paging += '<li class="paginate_button btn"><a onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id - 1) + '</a></li>';
+                    paging += '<li class="paginate_button previous btn"><a  onclick="return loadListEbookByBook(' + (page - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                    paging += '<li class="paginate_button btn"><a onclick="return loadListEbookByBook(' + (page - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id - 1) + '</a></li>';
                     paging += '<li class="paginate_button active"><a onclick="" aria-controls="example1" data-dt-idx="0" tabindex="0">' + id + '</a></li>';
                 }
-                if (id + 1 <= result.pageNumber) {
-                    paging += '<li class="paginate_button btn"><a  onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id + 1) + '</a></li>';
-                    paging += '<li class="paginate_button next btn" id="example1_next"><a onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+                if (page + 1 <= result.pageNumber) {
+                    paging += '<li class="paginate_button btn"><a  onclick="return loadListEbookByBook(' + (page + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id + 1) + '</a></li>';
+                    paging += '<li class="paginate_button next btn" id="example1_next"><a onclick="return loadListEbookByBook(' + (page + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
                 } else {
                     paging += '<li class="paginate_button next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
                 }
 
             }
 
-            $('#phanTrangDocOnline').html(paging);
+            $('#phanTrangEbook').html(paging);
 
             //Input count chapter
         },
@@ -326,3 +324,167 @@ function loadListEbookByBook(id, page) {
         }
     });
 }
+
+
+
+//Thêm một ebook
+function AddEbook() {
+    var res = validateEbook();
+    if (res == false) {
+        return false;
+    }
+
+    var typeebookselected = document.getElementById("ddlTypename");
+
+    var ebookObj = {
+        BookID: $('#bookID').val(),
+        TypeEbook: typeebookselected[typeebookselected.selectedIndex].value,
+        Link: $('#linkDownload').val(),
+    };
+    $.ajax({
+        url: "/Admin/Book/AddEbook",
+        data: JSON.stringify(ebookObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            //truyền id của book vào
+            loadListEbookByBook(result.idbook, 1);
+            $('#modalAddOrEditEbook').modal('hide');
+            $.notify(result.message, {
+                globalPosition: "top center",
+                className: "success"
+            });
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//Lấy ebook theo id
+function getEbookByID(idbook,typeid) {
+    //$('#typeEbook').css('border-color', 'lightgrey');
+    //$('#linkDownload').css('border-color', 'lightgrey');
+    $.ajax({
+        url: "/Admin/Book/GetEbookByID?idbook=" + idbook + "&typeid=" + typeid,
+        typr: "GET",
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            $('#bookID').val(result.BookID);
+            $('#typeEbook').val(result.TypeEbookID);
+            $('#linkDownload').val(result.LinkDownload);
+            $('#modalAddOrEditEbook').modal('show');
+            $('#btnUpdateEbook').show();
+            $('#btnAddEbook').hide();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+//chỉnh sữa một ebook
+function UpdateEbook() {
+    var res = validateEbook();
+    if (res == false) {
+        return false;
+    }
+
+    var typeebookselected = document.getElementById("ddlTypename");
+
+    var ebookObj = {
+        BookID: $('#bookID').val(),
+        TypeEbook: typeebookselected[typeebookselected.selectedIndex].value,
+        Link: $('#linkDownload').val(),
+    };
+
+    $.ajax({
+        url: "/Admin/Book/UpdateEbook",
+        data: JSON.stringify(ebookObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadListEbookByBook(result.idbook, 1);
+            $('#modalAddOrEditEbook').modal('hide');
+            $('#bookID').val("");
+            $('#typeEbook').val("");
+            $('#linkDownload').val("");
+            $.notify(result.message, {
+                globalPosition: "top center",
+                className: "success"
+            });
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//Xoá một ebook
+function DeleteEbook(idbook,typeid ) {
+    var ans = confirm("Are you sure you want to delete this Record?");
+    if (ans) {
+        $.ajax({
+            url: "/Admin/Book/DeleteEbook?idbook=" + idbook + "&typeid=" + typeid,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadListEbookByBook(result.id, 1);
+                $.notify(result.message, {
+                    globalPosition: "top center",
+                    className: "success"
+                });
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+}
+
+
+
+
+
+function validateEbook() {
+    var isValid = true;
+    if ($('#linkDownload').val().trim() == "") {
+        $('#linkDownload').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#linkDownload').css('border-color', 'lightgrey');
+    }
+    return isValid;
+}
+
+
+function clearModalEbook() {
+    getListTypeEbook();
+    $('#linkDownload').val("");
+    $('#btnUpdate').hide();
+    $('#btnAdd').show();
+    $('#linkDownload').css('border-color', 'lightgrey');
+}
+
+//Load name type ebook lên droplist
+
+function getListTypeEbook()
+{
+    var url = "/Admin/Book/GetAllListTypeEbook";
+    var listtypeebookname = $('#ddlTypename');
+    $.getJSON(url, function (response) {
+        listtypeebookname.empty();
+        $.each(response, function (index, item) {
+            listtypeebookname.append($('<option></option>').text(item.TypeEbookName).val(item.TypeEbookID));
+        });
+    });
+}
+
+

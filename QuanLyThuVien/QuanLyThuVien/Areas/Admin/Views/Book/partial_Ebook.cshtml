@@ -3,18 +3,18 @@
     <div class="box box-primary">
         <div class="box-header with-border">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-9">
                     <h3 class="box-title" style="margin-top:8px">Ebook của sách</h3>
                 </div>
-                <div class="col-md-2" style="text-align:right">
-                    <button type="submit" id="btnNewEbook" value="" onclick="location.href='@Url.Action("Add", "ChapterDetail", new { idbook = Model.BookID })'" class="btn btn-primary">Thêm ebook mới</button>
+                <div class="col-md-3" style="text-align:right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddOrEditEbook" onclick="clearModalEbook();">Thêm mới ebook</button>
                 </div>
             </div>
 
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-md-12">
                     <table id="#tablePhuLuc" class="table table-hover dataTable table-bordered">
                         <thead>
                             <tr role="row">
@@ -40,6 +40,44 @@
                 <div class="dataTables_paginate paging_simple_numbers" style="padding-right: 15px">
                     <ul class="pagination" id="phanTrangEbook" style="margin-top: -10px;margin-bottom: 0px;"></ul>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalAddOrEditEbook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Ebook</h4>
+            </div>
+            <div class="modal-body">
+                <form>      
+                    <div class="form-group">
+                        <input type="hidden" id="bookID" value="@Model.BookID" />
+                        @*<label for="TypeEbook">Thể loại ebook</label>*@
+                        @*<a href='@Url.Action("Index","BookCategory")' id="btnNewCategory" class="btn btn-default" style="margin-top: 10px">Thêm mới thể loại</a>\
+                        <button type="button" class="btn btn-default" id="btnReloadCategory" style="margin-top: 10px">Reload</button>*@
+                    </div>
+                    <div class="form-group">
+                        <label>Select</label>
+                        <select class="form-control" id="ddlTypename">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="linkdownload">Link download</label>
+                        <input type="text" class="form-control" id="linkDownload" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAddEbook" onclick="return AddEbook();">Add</button>
+                <button type="button" class="btn btn-primary" id="btnUpdateEbook" style="display:none;" onclick="UpdateEbook();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
