@@ -72,16 +72,24 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            var model = bookRepo.GetById(id);
-            IEnumerable<Author> listAuthor = authorRepo.GetAll();
-            ViewBag.AuthorList = new SelectList(listAuthor, "AuthorID", "AuthorName");
+            if(id!=null)
+            {
+                int idnew = (id ?? 1);
+                var model = bookRepo.GetById(idnew);
+                IEnumerable<Author> listAuthor = authorRepo.GetAll();
+                ViewBag.AuthorList = new SelectList(listAuthor, "AuthorID", "AuthorName");
 
-            IEnumerable<BookCategory> listCategory = bookCategoryRepo.GetAll();
-            ViewBag.ListCategory = new SelectList(listCategory, "CategoryID", "CategoryName");
-            ViewBag.Title = "Chỉnh sửa";
-            return View("Add", model);
+                IEnumerable<BookCategory> listCategory = bookCategoryRepo.GetAll();
+                ViewBag.ListCategory = new SelectList(listCategory, "CategoryID", "CategoryName");
+                ViewBag.Title = "Chỉnh sửa";
+                return View("Edit", model);
+            }
+            else
+            {
+                return View("Index");
+            }   
         }
 
         [HttpPost]
@@ -130,6 +138,35 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
                 CategoryName = x.CategoryName
             });
             return Json(listCategory, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //Load Bảng Edit
+        //Lấy danh sách chapter theo ID
+        public ActionResult GetAllChapterByID(int page=1,int id=0)
+        {
+            var listChapter = new BookRepository().GetAllChapterByIDBook(page,5,id);
+            return Json(new { data =listChapter.Select(x=>new {
+                ID=x.ChapterID,
+                NameChapter=x.NameChapter
+            }), pageNumber = listChapter.PageCount,idbook=id,amountChapter=listChapter.Count}, JsonRequestBehavior.AllowGet);
+        }
+
+        //Lấy danh sách ebook theo ID
+        public ActionResult GetAllEbookByIDBook(int page = 1, int idbook = 0)
+        {
+            var listEbook = new BookRepository().GetAllEbookByIDBook(page, 5, idbook);
+            return Json(new
+            {
+                data = listEbook.Select(x => new {
+                    BookID = idbook,
+                    TypeEbookID =x.TypeEbookID,
+                    TypeEbookName = x.TypeEbookName,
+                    Link = x.Link
+                }),
+                pageNumber = listEbook.PageCount,
+                idbook = idbook,
+            }, JsonRequestBehavior.AllowGet);
         }
 
 

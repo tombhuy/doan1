@@ -51,9 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\About.cs">
-      <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
-    </Compile>
+    <Compile Include="ModelView\EbookModelView.cs" />
     <Compile Include="Model\Author.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>
@@ -64,9 +62,6 @@
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ChapterDetail.cs">
-      <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Contact.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DbQuanLyThuVienContext.Context.cs">
@@ -84,10 +79,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbQuanLyThuVienContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Ebook.cs">
+      <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Footer.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Quotation.cs">
+      <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TypeEbook.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TypeUser.cs">

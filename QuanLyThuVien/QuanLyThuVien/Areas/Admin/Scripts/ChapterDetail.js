@@ -20,7 +20,7 @@ function loadData(id, searchString) {
                 html += '<td>' + item.Alias + '</td>';
                 html += '<td>' + item.NameChapter + '</td>';
                 html += '<td>' + item.Content + '</td>';
-                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.CategoryID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delete(' + item.IDBook + ','+item.ChapterID+')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '<td><a class="btn btn-default btn-sm" onclick="return getbyID(' + item.IDBook + ',' + item.ChapterID + ')"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="Delete(' + item.IDBook + ',' + item.ChapterID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
@@ -96,7 +96,7 @@ function Add() {
 }
 
 //Function for getting the Data Based upon Employee ID
-function getbyID(CategoryID) {
+function getbyID(idbook,idChapter) {
     $('#CategoryName').css('border-color', 'lightgrey');
     $('#SeoTitle').css('border-color', 'lightgrey');
     $('#MetaKeywords').css('border-color', 'lightgrey');

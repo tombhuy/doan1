@@ -46,5 +46,18 @@ namespace BusinessLogic.Repository
             return result.OrderBy(x => x.ChapterID).ToPagedList(pageNumber, pageSize);
         }
 
+        public bool IsContainInListChapterBook(int idBook,int idChapter)
+        {
+            var result = _dbContext.ChapterDetails.Where(x => x.IDBook == idBook && x.ChapterID == idChapter).FirstOrDefault();
+            if(result!=null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

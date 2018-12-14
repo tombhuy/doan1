@@ -179,3 +179,150 @@ function convertDateTime(datetimeString) {
 }
 
 
+
+
+
+
+//Trang Admin/Edit/IDBook
+//Thao tác trên bảng ĐỌC ONLINE
+
+function loadListChapterByID(id, page) {
+    $.ajax({
+        url: "/Admin/Book/GetAllChapterByID",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: { "id": id, "page": page },
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result.data, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.ID + '</td>';
+                html += '<td>' + item.NameChapter + '</td>';
+                html += '<td><a class="btn btn-default btn-sm" href="/Admin/ChapterDetail/Edit?idbook=' + result.idbook + '&idchapter=' + item.ID + '"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="DeleteChapter(' + result.idbook + ',' + item.ID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '</tr>';
+            });
+            $('.tablePhuLucbody').html(html);
+
+            var paging = '';
+            if (result.pageNumber == 1) {
+                paging += '<li class="paginate_button previous disabled" ><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                paging += '<li class="paginate_button active" ><a  href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>';
+                paging += '<li class="paginate_button next disabled"><a  href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+            }
+            else {
+                if (id == 1) {
+                    paging += '<li class="paginate_button previous disabled"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                    paging += '<li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>';
+                }
+                else {
+                    paging += '<li class="paginate_button previous btn"><a  onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                    paging += '<li class="paginate_button btn"><a onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id - 1) + '</a></li>';
+                    paging += '<li class="paginate_button active"><a onclick="" aria-controls="example1" data-dt-idx="0" tabindex="0">' + id + '</a></li>';
+                }
+                if (id + 1 <= result.pageNumber) {
+                    paging += '<li class="paginate_button btn"><a  onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id + 1) + '</a></li>';
+                    paging += '<li class="paginate_button next btn" id="example1_next"><a onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+                } else {
+                    paging += '<li class="paginate_button next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+                }
+
+            }
+
+            $('#phanTrangDocOnline').html(paging);
+
+            //Input count chapter
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+
+function getLastChapter() {
+    var search_value = document.getElementById('idChapterNew').value;
+    return search_value;
+}
+
+
+
+function DeleteChapter(bookID, chapterID) {
+    var ans = confirm("Are you sure you want to delete this Record?");
+    if (ans) {
+        $.ajax({
+            url: "/Admin/ChapterDetail/Delete?bookid=" + bookID + "&chapterid=" + chapterID,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadListChapterByID(result.idbook,1)
+                $.notify(result.message, {
+                    globalPosition: "top center",
+                    className: "success"
+                });
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+}
+
+
+
+//Thao tác trên bảng ebook
+
+
+function loadListEbookByBook(id, page) {
+    $.ajax({
+        url: "/Admin/Book/GetAllChapterByID",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: { "id": id, "page": page },
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result.data, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.ID + '</td>';
+                html += '<td>' + item.NameChapter + '</td>';
+                html += '<td><a class="btn btn-default btn-sm" href="/Admin/ChapterDetail/Edit?idbook=' + result.idbook + '&idchapter=' + item.ID + '"><i class="fa fa-edit"></i> Edit</a>  <a class="btn btn-danger btn-sm" onclick="DeleteChapter(' + result.idbook + ',' + item.ID + ')"><i class="fa fa-trash"></i>Delete</a></td>';
+                html += '</tr>';
+            });
+            $('.tablePhuLucbody').html(html);
+
+            var paging = '';
+            if (result.pageNumber == 1) {
+                paging += '<li class="paginate_button previous disabled" ><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                paging += '<li class="paginate_button active" ><a  href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>';
+                paging += '<li class="paginate_button next disabled"><a  href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+            }
+            else {
+                if (id == 1) {
+                    paging += '<li class="paginate_button previous disabled"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                    paging += '<li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>';
+                }
+                else {
+                    paging += '<li class="paginate_button previous btn"><a  onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>';
+                    paging += '<li class="paginate_button btn"><a onclick="return loadListChapterByID(' + (id - 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id - 1) + '</a></li>';
+                    paging += '<li class="paginate_button active"><a onclick="" aria-controls="example1" data-dt-idx="0" tabindex="0">' + id + '</a></li>';
+                }
+                if (id + 1 <= result.pageNumber) {
+                    paging += '<li class="paginate_button btn"><a  onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="0" tabindex="0">' + (id + 1) + '</a></li>';
+                    paging += '<li class="paginate_button next btn" id="example1_next"><a onclick="return loadListChapterByID(' + (id + 1) + ',' + result.idbook + ')" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+                } else {
+                    paging += '<li class="paginate_button next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>';
+                }
+
+            }
+
+            $('#phanTrangDocOnline').html(paging);
+
+            //Input count chapter
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}

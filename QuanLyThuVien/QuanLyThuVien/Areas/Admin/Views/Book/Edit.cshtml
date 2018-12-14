@@ -1,0 +1,65 @@
+﻿@model DataProvider.Model.Book
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
+}
+@section scripts{
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="js/captcha/jquery.clientsidecaptcha.js" type="text/javascript"></script>
+    <script src="~/Areas/Admin/Scripts/notify.min.js"></script>
+    <script src="/Areas/Admin/Scripts/Book.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            loadListChapterByID(@Model.BookID,1);
+        });
+    </script>
+
+    <script>
+
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+    </script>
+
+    <script>
+    $("#btnReloadAuthor").on('click', function (e) {
+        var url = '@Url.Action("GetAuthor", "Book")'; // Don't hard code your url's!
+        var authornames = $('#ddlAuthor'); // cache it
+        e.preventDefault(); e.preventDefault();
+        $.getJSON(url, function (response) {
+            authornames.empty(); // remove any existing options
+            $.each(response, function (index, item) { // item is now an object containing properties ID and Text
+                authornames.append($('<option></option>').text(item.AuthorName).val(item.AuthorID));
+            });
+        });
+    });
+    </script>
+
+    <script>
+
+    $("#btnReloadCategory").on('click', function (e) {
+        var url = '@Url.Action("GetCategory", "Book")'; // Don't hard code your url's!
+        var categorynames = $('#ddlCategory'); // cache it
+        e.preventDefault(); e.preventDefault();
+        $.getJSON(url, function (response) {
+            categorynames.empty(); // remove any existing options
+            $.each(response, function (index, item) { // item is now an object containing properties ID and Text
+                categorynames.append($('<option></option>').text(item.CategoryName).val(item.CategoryID));
+            });
+        });
+    });
+    </script>
+
+}
+
+
+
+@Html.Partial("partial_form_edit_book",Model)
+@Html.Partial("partial_Chapter",Model)
+@Html.Partial("partial_Ebook", Model)

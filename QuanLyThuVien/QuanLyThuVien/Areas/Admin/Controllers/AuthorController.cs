@@ -45,8 +45,15 @@ namespace QuanLyThuVien.Areas.Admin.Controllers
         public JsonResult GetbyID(int ID)
         {
             var auth = authorRepo.GetById(ID);
-            return Json(auth, JsonRequestBehavior.AllowGet);
+            return Json(new {
+                AuthorID = auth.AuthorID,
+                AuthorName = auth.AuthorName,
+                DescriptionAuthor = auth.DescriptionAuthor,
+                Alias = auth.Alias
+            }, JsonRequestBehavior.AllowGet);
         }
+
+
         public JsonResult Update(Author auth)
         {
             try

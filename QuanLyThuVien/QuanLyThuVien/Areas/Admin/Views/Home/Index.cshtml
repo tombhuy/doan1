@@ -2,4 +2,43 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
 }
-Nội dung
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Areas/Admin/Scripts/notify.min.js"></script>
+<script src="~/Areas/Admin/Scripts/Home.js"></script>
+    }
+
+<div class="col-md-6">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Đọc online - Phụ lục chương sách</h3> <button type="submit" onclick="loadListChapterByID(6, 1);" class="btn btn-primary">Thêm chương mới</button>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <table id="#tablePhuLuc" class="table table-hover dataTable table-bordered">
+                        <thead>
+                            <tr role="row">
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tiêu đề chương
+                                </th>
+                                <th width="150px">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tablePhuLucbody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="text-align: right">
+                <div class="dataTables_paginate paging_simple_numbers" style="padding-right: 15px">
+                    <ul class="pagination" id="phanTrangDocOnline" style="margin-top: -10px;margin-bottom: 0px;"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

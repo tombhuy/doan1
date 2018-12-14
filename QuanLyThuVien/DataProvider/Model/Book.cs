@@ -18,6 +18,7 @@ namespace DataProvider.Model
         public Book()
         {
             this.ChapterDetails = new HashSet<ChapterDetail>();
+            this.Ebooks = new HashSet<Ebook>();
         }
     
         public int BookID { get; set; }
@@ -36,5 +37,7 @@ namespace DataProvider.Model
         public virtual BookCategory BookCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChapterDetail> ChapterDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ebook> Ebooks { get; set; }
     }
 }

@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QuanLyThuVienModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Abouts">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Description" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="Authors">
           <Key>
             <PropertyRef Name="AuthorID" />
@@ -63,16 +55,14 @@
           <Property Name="NameChapter" Type="nvarchar" MaxLength="250" />
           <Property Name="Content" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="Contacts">
+        <EntityType Name="Ebook">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="TypeEbook" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="ContactName" Type="nvarchar" MaxLength="250" />
-          <Property Name="Phone" Type="varchar" MaxLength="50" />
-          <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Status" Type="bit" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="TypeEbook" Type="int" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Footer">
           <Key>
@@ -88,6 +78,14 @@
           </Key>
           <Property Name="QuotationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameQuotation" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="TypeEbook">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="TypeUsers">
           <Key>
@@ -147,15 +145,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ebook_Books">
+          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="Ebook" Type="Self.Ebook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="Ebook">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ebook_TypeEbook">
+          <End Role="TypeEbook" Type="Self.TypeEbook" Multiplicity="1" />
+          <End Role="Ebook" Type="Self.Ebook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeEbook">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Ebook">
+              <PropertyRef Name="TypeEbook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QuanLyThuVienModelStoreContainer">
-          <EntitySet Name="Abouts" EntityType="Self.Abouts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookCategories" EntityType="Self.BookCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChapterDetails" EntityType="Self.ChapterDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ebook" EntityType="Self.Ebook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Footer" EntityType="Self.Footer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeEbook" EntityType="Self.TypeEbook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeUsers" EntityType="Self.TypeUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Books_Authors" Association="Self.FK_Books_Authors">
@@ -170,30 +192,19 @@
             <End Role="Books" EntitySet="Books" />
             <End Role="ChapterDetails" EntitySet="ChapterDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ebook_Books" Association="Self.FK_Ebook_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Ebook" EntitySet="Ebook" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ebook_TypeEbook" Association="Self.FK_Ebook_TypeEbook">
+            <End Role="TypeEbook" EntitySet="TypeEbook" />
+            <End Role="Ebook" EntitySet="Ebook" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyThuVienModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="About">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Contact">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="ContactName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" />
-        </EntityType>
         <EntityType Name="Footer">
           <Key>
             <PropertyRef Name="ID" />
@@ -232,8 +243,6 @@
           <Property Name="Type" Type="Int32" />
         </EntityType>
         <EntityContainer Name="DbQuanLyThuVienContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Abouts" EntityType="Self.About" />
-          <EntitySet Name="Contacts" EntityType="Self.Contact" />
           <EntitySet Name="Footers" EntityType="Self.Footer" />
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="TypeUsers" EntityType="Self.TypeUser" />
@@ -254,7 +263,17 @@
             <End Role="Book" EntitySet="Books" />
             <End Role="ChapterDetail" EntitySet="ChapterDetails" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Ebooks" EntityType="QuanLyThuVienModel.Ebook" />
+          <EntitySet Name="TypeEbooks" EntityType="QuanLyThuVienModel.TypeEbook" />
+          <AssociationSet Name="FK_Ebook_Books" Association="QuanLyThuVienModel.FK_Ebook_Books">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Ebook" EntitySet="Ebooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ebook_TypeEbook" Association="QuanLyThuVienModel.FK_Ebook_TypeEbook">
+            <End Role="TypeEbook" EntitySet="TypeEbooks" />
+            <End Role="Ebook" EntitySet="Ebooks" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Author">
           <Key>
             <PropertyRef Name="AuthorID" />
@@ -298,6 +317,7 @@
           <NavigationProperty Name="Author" Relationship="QuanLyThuVienModel.FK_Books_Authors" FromRole="Book" ToRole="Author" />
           <NavigationProperty Name="BookCategory" Relationship="QuanLyThuVienModel.FK_Books_BookCategories" FromRole="Book" ToRole="BookCategory" />
           <NavigationProperty Name="ChapterDetails" Relationship="QuanLyThuVienModel.FK_ChapterDetails_Books" FromRole="Book" ToRole="ChapterDetail" />
+          <NavigationProperty Name="Ebooks" Relationship="QuanLyThuVienModel.FK_Ebook_Books" FromRole="Book" ToRole="Ebook" />
         </EntityType>
         <Association Name="FK_Books_Authors">
           <End Type="QuanLyThuVienModel.Author" Role="Author" Multiplicity="0..1" />
@@ -347,33 +367,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Ebook">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="TypeEbook" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="TypeEbook" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Book" Relationship="QuanLyThuVienModel.FK_Ebook_Books" FromRole="Ebook" ToRole="Book" />
+          <NavigationProperty Name="TypeEbook1" Relationship="QuanLyThuVienModel.FK_Ebook_TypeEbook" FromRole="Ebook" ToRole="TypeEbook" />
+        </EntityType>
+        <EntityType Name="TypeEbook">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Ebooks" Relationship="QuanLyThuVienModel.FK_Ebook_TypeEbook" FromRole="TypeEbook" ToRole="Ebook" />
+        </EntityType>
+        <Association Name="FK_Ebook_Books">
+          <End Type="QuanLyThuVienModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="QuanLyThuVienModel.Ebook" Role="Ebook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="Ebook">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ebook_TypeEbook">
+          <End Type="QuanLyThuVienModel.TypeEbook" Role="TypeEbook" Multiplicity="1" />
+          <End Type="QuanLyThuVienModel.Ebook" Role="Ebook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeEbook">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Ebook">
+              <PropertyRef Name="TypeEbook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuanLyThuVienModelStoreContainer" CdmEntityContainer="DbQuanLyThuVienContext">
-          <EntitySetMapping Name="Abouts">
-            <EntityTypeMapping TypeName="QuanLyThuVienModel.About">
-              <MappingFragment StoreEntitySet="Abouts">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contacts">
-            <EntityTypeMapping TypeName="QuanLyThuVienModel.Contact">
-              <MappingFragment StoreEntitySet="Contacts">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Footers">
             <EntityTypeMapping TypeName="QuanLyThuVienModel.Footer">
               <MappingFragment StoreEntitySet="Footer">
@@ -468,7 +511,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Ebooks">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.Ebook">
+              <MappingFragment StoreEntitySet="Ebook">
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="TypeEbook" ColumnName="TypeEbook" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeEbooks">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.TypeEbook">
+              <MappingFragment StoreEntitySet="TypeEbook">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

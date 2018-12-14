@@ -145,8 +145,10 @@
     <Content Include="Areas\Admin\Scripts\Book.js" />
     <Content Include="Areas\Admin\Scripts\BookCategory.js" />
     <Content Include="Areas\Admin\Scripts\ChapterDetail.js" />
+    <Content Include="Areas\Admin\Scripts\Home.js" />
     <Content Include="Areas\Admin\Scripts\notify.min.js" />
     <Content Include="Areas\Admin\Scripts\Quotation.js" />
+    <Content Include="Areas\Admin\Scripts\timkiem.js" />
     <Content Include="Areas\Admin\Scripts\User.js" />
     <Content Include="Content\admin2\.gitignore" />
     <Content Include="Content\admin2\dist\css\Paging.css" />
@@ -1265,9 +1267,15 @@
     <Content Include="Content\admin2\plugins\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Areas\Admin\Views\ChapterDetail\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Book\partial_Ebook.cshtml" />
+    <Content Include="Areas\Admin\Views\Book\partial_Chapter.cshtml" />
+    <Content Include="Areas\Admin\Views\Book\partial_form_edit_book.cshtml" />
+    <Content Include="Areas\Admin\Views\Book\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ChapterDetail\Edit.cshtml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="scripts\jquery-ui.min.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
@@ -1276,16 +1284,15 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthorController.cs" />
     <Compile Include="Areas\Admin\Controllers\BookCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\BookController.cs" />
     <Compile Include="Areas\Admin\Controllers\ChapterDetailController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Models\ChapterDetailModelInput.cs" />
     <Compile Include="Areas\Admin\Models\UserLogin.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\LoginInfor.cs" />

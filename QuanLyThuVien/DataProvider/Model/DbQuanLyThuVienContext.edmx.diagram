@@ -5,8 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4ffd83da9cef443197190e1ce4b4b7f8" Name="Diagram1">
-        <EntityTypeShape EntityType="QuanLyThuVienModel.About" Width="1.5" PointX="1.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.Contact" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.Footer" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.Quotation" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.TypeUser" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
@@ -18,7 +16,11 @@
         <AssociationConnector Association="QuanLyThuVienModel.FK_Books_BookCategories" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.ChapterDetail" Width="1.5" PointX="13.5" PointY="0.5" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_ChapterDetails_Books" />
-      </Diagram>
+        <EntityTypeShape EntityType="QuanLyThuVienModel.Ebook" Width="1.5" PointX="14.125" PointY="5.25" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.TypeEbook" Width="1.5" PointX="11.875" PointY="9.25" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_Ebook_Books" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_Ebook_TypeEbook" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

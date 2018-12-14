@@ -1,8 +1,11 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
 }
+@section headercss{
 
+    }
 @section scripts{
     <script src="~/Content/admin2/plugins/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
@@ -28,11 +31,11 @@
                         <div class="dataTables_wrapper form-inline dt-bootstrap">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Chapter</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="location.href='@Url.Action("Add","ChapterDetail")'">Add New Chapter</button>
                                 </div>
                                 <div class="col-sm-6" style="text-align:right">
-                                    <label>Search: <input type="text" class="form-control" id="inputKeyword" /></label>
-                                    <button class="btn" onclick="SearchClick()">Tìm</button>
+                                    <label>Search: <input type="text" class="form-control" id="inputKeyword" /></label> 
+                                         <button class="btn" onclick="SearchClick()">Tìm</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -72,33 +75,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Add Quotation</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="QuotationID">ID</label>
-                            <input type="text" class="form-control" id="QuotationID" placeholder="Id" disabled="disabled" />
-                        </div>
-                        <div class="form-group">
-                            <label for="NameQuotation">Quotation</label>
-                            <input type="text" class="form-control" id="NameQuotation" placeholder="Quotation" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
-                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

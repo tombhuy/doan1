@@ -2,43 +2,45 @@
 <div class="col-md-6">
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">@ViewBag.Title</h3>
-        </div>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            <form role="form">
-                <div class="box-body">
-                    <div class="form-group">
-                        <label for="bookname">Tên sách</label>
-                        @Html.TextBoxFor(model => model.BookName, new { @class = "form-control", placeholder = "Nhập tên sách" })
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả</label>
-                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Nhập...", rows = "3" })
-                    </div>
-                    <div class="form-group">
-                        <label for="alias">Alias</label>
-                        @Html.TextBoxFor(model => model.Alias, new { @class = "form-control", placeholder = "Ví dụ: tony-buoi-sang" })
-                    </div>
-                    <div class="form-group">
-                        <label for="image">Image</label>
-                        @Html.TextBoxFor(model => model.MoreImages, new { @class = "form-control", @id = "txtImage" })
-                        <button type="button" id="btnSelectImage" class="btn btn-default" style="margin-top: 10px">Chọn file</button>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            @Html.EditorFor(model => model.TopHot) Top Hot
-                        </label>
-                    </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <h3 class="box-title" style="margin-top:8px">Ebook của sách</h3>
                 </div>
-                <!-- /.box-body -->
+                <div class="col-md-2" style="text-align:right">
+                    <button type="submit" id="btnNewEbook" value="" onclick="location.href='@Url.Action("Add", "ChapterDetail", new { idbook = Model.BookID })'" class="btn btn-primary">Thêm ebook mới</button>
+                </div>
+            </div>
 
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index","Book")'">Trở về</button>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <table id="#tablePhuLuc" class="table table-hover dataTable table-bordered">
+                        <thead>
+                            <tr role="row">
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Loại ebook
+                                </th>
+                                <th>
+                                    Link
+                                </th>
+                                <th width="150px">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tableEbook"></tbody>
+                    </table>
                 </div>
-            </form>
-        }
+            </div>
+            <div class="row" style="text-align: right">
+                <div class="dataTables_paginate paging_simple_numbers" style="padding-right: 15px">
+                    <ul class="pagination" id="phanTrangEbook" style="margin-top: -10px;margin-bottom: 0px;"></ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
