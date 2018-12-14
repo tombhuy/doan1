@@ -19,6 +19,7 @@ namespace DataProvider.Model
         {
             this.ChapterDetails = new HashSet<ChapterDetail>();
             this.Ebooks = new HashSet<Ebook>();
+            this.AudioBooks = new HashSet<AudioBook>();
         }
     
         public int BookID { get; set; }
@@ -39,5 +40,7 @@ namespace DataProvider.Model
         public virtual ICollection<ChapterDetail> ChapterDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ebook> Ebooks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AudioBook> AudioBooks { get; set; }
     }
 }

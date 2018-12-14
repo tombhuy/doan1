@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "UploadAudio";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
+}
+
+@section scripts
+{
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="/scripts/jquery-3.3.1.min.js"></script>
+        <script src="/scripts/bootstrap.min.js"></script>*@
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+
+            $("audio").on("play", function () {
+                $("audio").not(this).each(function (index, audio) {
+                    audio.pause();
+                });
+
+            });
+        });
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Audio List</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <!--Button Thêm Mới-->
+                        <button style="margin-left: 27px;margin-bottom:10px;" type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#myModal">
+                            <i class="fa fa-plus-circle"></i> Thêm Audio
+                        </button>
+
+
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Upload New Audio File</h4>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+
+                                    <!--Form chọn ảnh và upload-->
+                                    <div class="modal-body">
+                                        @using (Html.BeginForm("UploadAudio", "AudioBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+
+                                            @*<!---->
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.BookID, "BookID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownList("BookID", null, htmlAttributes: new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.BookID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.AudioID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.AudioID, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.AudioID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.AudioName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.AudioName, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.AudioName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.FileAudioSize, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.FileAudioSize, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.FileAudioSize, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.FileAudioPath, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.FileAudioPath, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.FileAudioPath, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Alias, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Alias, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <input type="submit" value="Create" class="btn btn-default" />
+                                                    </div>
+                                                </div>
+                                                <!---->*@
+                                            <div class="form-group">
+                                                <label>Choose File:</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" id="fileupload" name="fileupload" class="custom-file-input" />
+                                                        <label class="custom-file-label"></label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table id="dataTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>BookID</th>
+                                <th>AudioID</th>
+                                <th>Audio Name</th>
+                                <th style="width:90px;">File Size(MB)</th>
+                                <th>Alias</th>
+                                <th>Play Audio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.BookID</td>
+                                    <td>@item.AudioID</td>
+                                    <td>@item.AudioName</td>
+                                    <td>@item.FileAudioSize</td>
+                                    <td>@item.Alias</td>
+                                    <td>
+                                        <audio controls>
+                                            <source src="@Url.Content(@item.FileAudioPath)" type="audio/ogg">
+                                        </audio>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--Body-->
+@*<div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Audio Book Record</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("UploadAudio","Book")'">Add New Audio Book</button>
+                                </div>
+                                <div class="col-sm-6" style="text-align:right">
+                                    <label>Search: <input type="text" class="form-control" id="inputKeyword" /></label>
+                                    <button class="btn" onclick="SearchClick()">Tìm</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <table id="#mytab" class="table table-hover dataTable table-bordered">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>BookID</th>
+                                                <th>AudioID</th>
+                                                <th>Audio Name</th>
+                                                <th>File Audio Size(MB)</th>
+                                                <th>Alias</th>
+                                                <th>Play Audio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align: right">
+                                <div class="dataTables_paginate paging_simple_numbers" style="padding-right: 15px">
+                                    <ul class="pagination" id="phantrang" style="margin-top: -10px;margin-bottom: 0px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

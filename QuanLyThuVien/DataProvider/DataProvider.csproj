@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,8 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelView\AudioBookModelView.cs" />
     <Compile Include="ModelView\EbookModelView.cs" />
     <Compile Include="ModelView\EbookModelViewName.cs" />
+    <Compile Include="Model\AudioBook.cs">
+      <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Author.cs">
       <DependentUpon>DbQuanLyThuVienContext.tt</DependentUpon>
     </Compile>

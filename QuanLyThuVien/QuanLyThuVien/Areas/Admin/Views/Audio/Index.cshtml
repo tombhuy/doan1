@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "UploadAudio";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_admin2.cshtml";
+}
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Areas/Admin/Scripts/Audio.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+            getListEbook();
+
+            $("audio").on("play", function () {
+                $("audio").not(this).each(function (index, audio) {
+                    audio.pause();
+                });
+
+            });
+        });
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Audio List</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <!--Button Thêm Mới-->
+                        <button style="margin-left: 27px;margin-bottom:10px;" type="button" class="btn btn-primary rounded-0" onclick="clearTextBoxAddAudioBook()" data-toggle="modal" data-target="#modalAddOrEditAudioBook">
+                            <i class="fa fa-plus-circle"></i> Thêm Audio
+                        </button>
+                    </div>
+                    <table id="dataTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>BookID</th>
+                                <th>AudioID</th>
+                                <th>Audio Name</th>
+                                <th style="width:90px;">File Size(MB)</th>
+                                <th>Alias</th>
+                                <th>Play Audio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.BookID</td>
+                                    <td>@item.AudioID</td>
+                                    <td>@item.AudioName</td>
+                                    <td>@item.FileAudioSize</td>
+                                    <td>@item.Alias</td>
+                                    <td>
+                                        <audio controls>
+                                            <source src="@Url.Content(@item.FileAudioPath)" type="audio/ogg">
+                                        </audio>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddOrEditAudioBook">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload New Audio File</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!--Form chọn ảnh và upload-->
+            <div class="modal-body">
+                <form enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Tên sách</label>
+                        <select class="form-control" id="ddlNameBook"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="linkdownload">AudioID</label>
+                        <input type="text" class="form-control" id="AudioID" />
+                    </div>
+                    <div class="form-group">
+                        <label for="linkdownload">Tên audio</label>
+                        <input type="text" class="form-control" id="AudioName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="linkdownload">Alias</label>
+                        <input type="text" class="form-control" id="Alias" />
+                    </div>
+                    <div class="form-group">
+                        <label>Choose File:</label>
+                        <br />
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" id="fileupload" name="fileupload" class="custom-file-input" />
+                                <label class="custom-file-label"></label>
+                            </div>
+                            <div class="input-group-append">
+                                <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAddEbook" onclick="return AddAudio();">Add</button>
+                <button type="button" class="btn btn-primary" id="btnUpdateEbook" style="display:none;" onclick="UpdateAudio();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

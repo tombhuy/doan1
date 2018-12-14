@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QuanLyThuVienModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AudioBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="AudioID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="AudioID" Type="int" Nullable="false" />
+          <Property Name="AudioName" Type="nvarchar" MaxLength="250" />
+          <Property Name="FileAudioSize" Type="int" />
+          <Property Name="FileAudioPath" Type="nvarchar" MaxLength="150" />
+          <Property Name="Alias" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="Authors">
           <Key>
             <PropertyRef Name="AuthorID" />
@@ -109,6 +121,18 @@
           <Property Name="Status" Type="bit" />
           <Property Name="Type" Type="int" />
         </EntityType>
+        <Association Name="FK_AudioBook_Books">
+          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="AudioBook" Type="Self.AudioBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="AudioBook">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Books_Authors">
           <End Role="Authors" Type="Self.Authors" Multiplicity="0..1" />
           <End Role="Books" Type="Self.Books" Multiplicity="*" />
@@ -170,6 +194,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="QuanLyThuVienModelStoreContainer">
+          <EntitySet Name="AudioBook" EntityType="Self.AudioBook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookCategories" EntityType="Self.BookCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
@@ -180,6 +205,10 @@
           <EntitySet Name="TypeEbook" EntityType="Self.TypeEbook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeUsers" EntityType="Self.TypeUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AudioBook_Books" Association="Self.FK_AudioBook_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="AudioBook" EntitySet="AudioBook" />
+          </AssociationSet>
           <AssociationSet Name="FK_Books_Authors" Association="Self.FK_Books_Authors">
             <End Role="Authors" EntitySet="Authors" />
             <End Role="Books" EntitySet="Books" />
@@ -273,6 +302,11 @@
             <End Role="TypeEbook" EntitySet="TypeEbooks" />
             <End Role="Ebook" EntitySet="Ebooks" />
           </AssociationSet>
+          <EntitySet Name="AudioBooks" EntityType="QuanLyThuVienModel.AudioBook" />
+          <AssociationSet Name="FK_AudioBook_Books" Association="QuanLyThuVienModel.FK_AudioBook_Books">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="AudioBook" EntitySet="AudioBooks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Author">
           <Key>
@@ -318,6 +352,7 @@
           <NavigationProperty Name="BookCategory" Relationship="QuanLyThuVienModel.FK_Books_BookCategories" FromRole="Book" ToRole="BookCategory" />
           <NavigationProperty Name="ChapterDetails" Relationship="QuanLyThuVienModel.FK_ChapterDetails_Books" FromRole="Book" ToRole="ChapterDetail" />
           <NavigationProperty Name="Ebooks" Relationship="QuanLyThuVienModel.FK_Ebook_Books" FromRole="Book" ToRole="Ebook" />
+          <NavigationProperty Name="AudioBooks" Relationship="QuanLyThuVienModel.FK_AudioBook_Books" FromRole="Book" ToRole="AudioBook" />
         </EntityType>
         <Association Name="FK_Books_Authors">
           <End Type="QuanLyThuVienModel.Author" Role="Author" Multiplicity="0..1" />
@@ -408,6 +443,31 @@
             </Principal>
             <Dependent Role="Ebook">
               <PropertyRef Name="TypeEbook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AudioBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="AudioID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="AudioID" Type="Int32" Nullable="false" />
+          <Property Name="AudioName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FileAudioSize" Type="Int32" />
+          <Property Name="FileAudioPath" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="QuanLyThuVienModel.FK_AudioBook_Books" FromRole="AudioBook" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_AudioBook_Books">
+          <End Type="QuanLyThuVienModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="QuanLyThuVienModel.AudioBook" Role="AudioBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="AudioBook">
+              <PropertyRef Name="BookID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -526,6 +586,18 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AudioBooks">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.AudioBook">
+              <MappingFragment StoreEntitySet="AudioBook">
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="FileAudioPath" ColumnName="FileAudioPath" />
+                <ScalarProperty Name="FileAudioSize" ColumnName="FileAudioSize" />
+                <ScalarProperty Name="AudioName" ColumnName="AudioName" />
+                <ScalarProperty Name="AudioID" ColumnName="AudioID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

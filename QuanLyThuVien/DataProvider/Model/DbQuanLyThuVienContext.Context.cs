@@ -35,5 +35,6 @@ namespace DataProvider.Model
         public virtual DbSet<ChapterDetail> ChapterDetails { get; set; }
         public virtual DbSet<Ebook> Ebooks { get; set; }
         public virtual DbSet<TypeEbook> TypeEbooks { get; set; }
+        public virtual DbSet<AudioBook> AudioBooks { get; set; }
     }
 }

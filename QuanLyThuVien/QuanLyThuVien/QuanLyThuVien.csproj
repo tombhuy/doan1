@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\Audio.js" />
     <Content Include="Areas\Admin\Scripts\Author.js" />
     <Content Include="Areas\Admin\Scripts\Book.js" />
     <Content Include="Areas\Admin\Scripts\BookCategory.js" />
@@ -1271,6 +1272,9 @@
     <Content Include="Areas\Admin\Views\Book\partial_form_edit_book.cshtml" />
     <Content Include="Areas\Admin\Views\Book\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ChapterDetail\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Audio\UploadAudio.cshtml" />
+    <Content Include="Areas\Admin\Views\Audio\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Audio\partial_Add.cshtml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -1284,6 +1288,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AudioController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthorController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\BookCategoryController.cs" />
@@ -1333,6 +1338,7 @@
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\Contact\" />
     <Folder Include="Areas\Admin\Views\Ebook\" />
+    <Folder Include="AudioFileUpload\" />
     <Folder Include="Content\admin2\.github\" />
     <Folder Include="Content\admin2\bower_components\" />
     <Folder Include="Content\admin2\build\" />

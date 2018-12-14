@@ -20,6 +20,8 @@
         <EntityTypeShape EntityType="QuanLyThuVienModel.TypeEbook" Width="1.5" PointX="11.875" PointY="9.25" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_Ebook_Books" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_Ebook_TypeEbook" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.AudioBook" Width="1.5" PointX="8.625" PointY="9.25" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_AudioBook_Books" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
